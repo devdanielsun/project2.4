@@ -2,4 +2,4 @@
 
 Do a global Angular install for the 'webapp'
 
-    npm install -g @Angular/cli
+    npm install -g @angular/cli
