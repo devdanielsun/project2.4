@@ -1,0 +1,19 @@
+<div class="image">
+
+
+  <div class="jumbotron">
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(userForm.value)" class=" text-center">
+
+        <h1 class="title h5 mb-4">Holidayz</h1>
+
+        <div class="form-row mb-6">
+          <input type="email" formControlName="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+      </div>
+        <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+
+        <hr>
+    </form>
+  </div>
+</div>

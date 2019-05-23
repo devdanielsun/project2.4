@@ -1,0 +1,10 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+.form-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.jumbotron {
+  background-color: #94b7d3;
+}

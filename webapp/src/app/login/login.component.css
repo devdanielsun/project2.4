@@ -1,0 +1,35 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+.form-control {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.jumbotron {
+  background-color: #94b7d3;
+  background-image: url('./nasa-53884-unsplash.jpg');
+  background-size: cover;
+}
+.image{
+    background-image: url('./nasa-53884-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+.title{
+  text-align: center;
+    font-weight: normal;
+    color: #db871a;
+    text-transform: uppercase;
+    font-size: 8em;
+    white-space: nowrap;
+    font-size: 12vw;
+    z-index: 1000;
+    font-family: 'Bangers', cursive;
+    text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.7);
+    @include skew(0, -6.7deg, false);
+    @include transition-property(font-size);
+    @include transition-duration(0.5s);
+
+}
