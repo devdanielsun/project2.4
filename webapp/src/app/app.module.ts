@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 
 import { RegistrationModule } from './registration/registration.module';
 import { LoginModule } from './login/login.module';
+import { MapboxModule } from './mapbox/mapbox.module';
+import { MapService } from './mapbox/maps/map.service'
 
 @NgModule({
   declarations: [
@@ -15,9 +17,10 @@ import { LoginModule } from './login/login.module';
     BrowserModule,
     AppRoutingModule,
     RegistrationModule,
-    LoginModule
+    LoginModule,
+    MapboxModule,
   ],
-  providers: [],
+  providers: [MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
