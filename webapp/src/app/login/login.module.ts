@@ -1,8 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { LoginComponent } from './Login.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+
+import { LoginComponent } from './login.component';
+import {LoginRoutingModule} from './login-routing.module';
 
 
 @NgModule({
@@ -10,17 +12,14 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
     LoginComponent
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
-    ReactiveFormsModule
-
-  ],
-  providers: [
-  ],
-  exports: [
-    LoginComponent,
+    ReactiveFormsModule,
+    LoginRoutingModule,
   ],
   bootstrap: [LoginComponent]
 })
 
-export class LoginModule { }
+export class LoginModule {
+
+}

@@ -2,8 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,13 +14,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-    email: [null,Validators.compose([Validators.required, Validators.minLength(5), Validators.email, Validators.pattern('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')])],
+    email: [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.email, Validators.pattern('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')])],
     password: [null, Validators.compose([Validators.required, Validators.minLength(8)])]
-    })
+    });
   }
 
   onSubmit(userData) {
-      if(this.loginForm.valid){
+      if(this.loginForm.valid) {
         alert('User form is valid!!');
       }
       else {
@@ -31,6 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   getUrl(){
-    return "url('../Project.png')";
+    return 'url(\'../Project.png\')';
   }
 }
