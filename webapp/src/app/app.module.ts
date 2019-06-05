@@ -3,8 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+import { MapboxModule } from './mapbox/mapbox.module';
+import { MapService } from './mapbox/maps/map.service'
+
 import {RouteRoutingModule} from './routing/routing.module';
 import { Routes, RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -13,11 +17,12 @@ import { Routes, RouterModule } from '@angular/router';
   ],
   imports: [
     BrowserModule,
-    // RouterModule, <- Kan misschien wel weg
+    AppRoutingModule,
+    MapboxModule,
     RouteRoutingModule,
 
   ],
-  providers: [],
+  providers: [MapService],
   bootstrap: [AppComponent]
 })
 
