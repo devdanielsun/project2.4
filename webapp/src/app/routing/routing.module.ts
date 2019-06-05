@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {LoginModule} from '../login/login.module';
-import {RegistrationModule} from '../registration/registration.module';
-import {LoginComponent} from '../login/login.component';
 
 
 const routes: Routes = [
@@ -17,6 +14,10 @@ const routes: Routes = [
   {
     path: 'registration',
     loadChildren: '../registration/registration.module#RegistrationModule',
+  },
+  {
+    path: 'map',
+    loadChildren: '../mapbox/mapbox.module#MapboxModule',
   }
 ];
 
