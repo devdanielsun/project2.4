@@ -1,8 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { RegistrationComponent } from './registration.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+
+import { Routes, RouterModule } from '@angular/router';
+
+import { RegistrationComponent } from './registration.component';
+import {RegistrationRoutingModule} from './registration-routing.module';
 
 
 @NgModule({
@@ -10,15 +15,12 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
     RegistrationComponent
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    RegistrationRoutingModule
   ],
   providers: [
-  ],
-  exports: [
-    RegistrationComponent,
   ],
   bootstrap: [RegistrationComponent]
 })
