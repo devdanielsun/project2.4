@@ -9,23 +9,25 @@ import * as mapboxgl from 'mapbox-gl';
 @Injectable()
 export class MapService {
 
-  constructor() { //private db: AngularFireDatabase) {
-    console.log(environment.mapbox.accessToken)
-    mapboxgl.accessToken = environment.mapbox.accessToken
+  constructor() {
+    console.log(environment.mapbox.accessToken);
+    mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
-  getMarkers() { //: AngularFireList<any> {
-    //return this.db.list('/markers')
-    console.log("Get Markers")
+  private list: string[] = ['!in', 'NAME', 'Antarctica', 'Netherlands'];
+
+  getVisitedCountries() {
+    console.log(this.list)
+    return this.list;
   }
 
-  createMarker(data: GeoJson) {
-    //return this.db.list('/markers').push(data)
-    console.log("Create Marker: " + data)
+  addCountry(data: string): void {
+    if (!this.list.includes(data)) {
+      this.list.push(data);
+    }
   }
 
-  removeMarker($key: string) {
-    //return this.db.object('/markers/' + $key).remove()
-    console.log("Remove Marker: " + $key)
+  removeCountry(key: string) {
+
   }
 }

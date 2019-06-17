@@ -1,6 +1,6 @@
+import { MapService } from './../map.service';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { MapService } from '../map.service';
 import { GeoJson, FeatureCollection } from '../map';
 
 
@@ -13,7 +13,7 @@ export class MapBoxComponent implements OnInit{
 
   /// default settings
   map: mapboxgl.Map;
-  style = 'mapbox://styles/danielgeerts/cjw1z9cul05ha1crpp4ocmswr';
+  style = 'mapbox://styles/danielgeerts/cjx0c0f3x06yt1cs3yfskhjhv';
   lng = 2.317600;
   lat = 48.866500;
   message = 'Dit is europa!';
@@ -28,9 +28,9 @@ export class MapBoxComponent implements OnInit{
 
   ngOnInit() {
     this.markers = new Array();
-    this.markers.push(new GeoJson(37.75, -122.41));
+    //this.markers.push(new GeoJson(37.75, -122.41));
     //this.markers = this.mapService.getMarkers()
-    this.initializeMap()
+    this.initializeMap();
   }
 
   private initializeMap() {
@@ -41,11 +41,11 @@ export class MapBoxComponent implements OnInit{
         this.lng = position.coords.longitude;
         this.map.flyTo({
           center: [this.lng, this.lat]
-        })
+        });
       });
     }
 
-    this.buildMap()
+    this.buildMap();
 
   }
 
@@ -65,65 +65,62 @@ export class MapBoxComponent implements OnInit{
     //// Add Marker on Click
     this.map.on('click', (event) => {
       const coordinates = [event.lngLat.lng, event.lngLat.lat]
-      const newMarker   = new GeoJson(coordinates, { message: this.message })
-      //this.mapService.createMarker(newMarker)
-    })
+      const newMarker   = new GeoJson(coordinates, { message: this.message });
+      console.log(coordinates);
+    });
 
-
-    /// Add realtime firebase data on map load
     this.map.on('load', (event) => {
-
-      /// register source
-      this.map.addSource('firebase', {
-         type: 'geojson',
-         data: {
-           type: 'FeatureCollection',
-           features: []
-         }
+      this.map.addSource('everycountry', {
+        'type': 'vector',
+        'url': 'mapbox://danielgeerts.0e8dwloy',
       });
 
-      /// get source
-      this.source = this.map.getSource('firebase')
-
-      /// subscribe to realtime database and set data source
-      /*this.markers.subscribe(markers => {
-          let data = new FeatureCollection(markers)
-          this.source.setData(data)
-      })*/
-
-      /// create map layers with realtime data
       this.map.addLayer({
-        id: 'firebase',
-        source: 'firebase',
-        type: 'symbol',
-        layout: {
-          'text-field': '{message}',
-          'text-size': 24,
-          'text-transform': 'uppercase',
-          'icon-image': 'rocket-15',
-          'text-offset': [0, 1.5]
-        },
+        id: 'country-layer',
+        type: 'fill',
+        source: 'everycountry',
+        'source-layer': 'ne_10m_admin_0_countries-8bj9st',
         paint: {
-          'text-color': '#f16624',
-          'text-halo-color': '#fff',
-          'text-halo-width': 2
+          'fill-outline-color' : 'rgba(0,0,0,0.75)',
+          'fill-color':  'rgba(139,0,139,0.5)'
+        },
+        filter: this.mapService.getVisitedCountries(),
+      }, 'holiday_overlay');
+
+      /*this.map.addLayer({
+        "id": "countries-highlighted",
+        "type": "fill",
+        "source": "everycountry",
+        "source-layer": "ne_10m_admin_0_countries-8bj9st",
+        "paint": {
+          "fill-outline-color": "rgba(0,0,0,0)",
+          "fill-color": "rgba(255,255,255,0.25)",
+          "fill-opacity": 1
+        },
+      }, 'holiday_overlay');*/
+
+      let list = ['!in', 'NAME', 'Antarctica', 'Netherlands'];
+
+
+      this.map.on('click', (e: any) => {
+        // set bbox as 5px reactangle area around clicked point
+        const bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+        const features = this.map.queryRenderedFeatures(bbox, { layers: ['country-layer'] });
+
+        let f;
+        for (f of features) {
+          console.log('clickedOn: ' + f.properties.NAME);
+          this.addCountry(list, f.properties.NAME);
         }
-      })
 
-    })
-
+        this.map.setFilter('country-layer', list);
+      });
+    });
   }
 
-
-  /// Helpers
-
-  removeMarker(marker) {
-    //this.mapService.removeMarker(marker.$key)
-  }
-
-  flyTo(data: GeoJson) {
-    this.map.flyTo({
-      center: data.geometry.coordinates
-    })
+  addCountry(arr: string[], data: string): void {
+    if (arr && data) {
+      arr.push(data);
+    }
   }
 }
