@@ -5,31 +5,21 @@ import { GeoJson, FeatureCollection } from '../map';
 
 
 @Component({
-  selector: 'map-box',
+  selector: 'app-map-box',
   templateUrl: './map-box.component.html',
   styleUrls: ['./map-box.component.css']
 })
-export class MapBoxComponent implements OnInit{
 
+export class MapBoxComponent implements OnInit {
   /// default settings
   map: mapboxgl.Map;
   style = 'mapbox://styles/danielgeerts/cjx0c0f3x06yt1cs3yfskhjhv';
-  lng = 2.317600;
-  lat = 48.866500;
-  message = 'Dit is europa!';
 
-  // data
-  source: any;
-  markers: any;
+  private list: string[] = ['!in', 'NAME', 'Antarctica', 'Netherlands'];
 
-  constructor(private mapService: MapService) {
-
-  }
+  constructor(private mapService: MapService) { }
 
   ngOnInit() {
-    this.markers = new Array();
-    //this.markers.push(new GeoJson(37.75, -122.41));
-    //this.markers = this.mapService.getMarkers()
     this.initializeMap();
   }
 
@@ -37,16 +27,11 @@ export class MapBoxComponent implements OnInit{
     /// locate the user
     if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(position => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.map.flyTo({
-          center: [this.lng, this.lat]
-        });
+        console.log (position.coords.latitude, position.coords.longitude);
       });
     }
 
     this.buildMap();
-
   }
 
   buildMap() {
@@ -54,25 +39,16 @@ export class MapBoxComponent implements OnInit{
       container: 'map',
       style: this.style,
       zoom: 1,
-      center: [this.lng, this.lat]
+      center: [0, 0]
     });
-
 
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
 
-
-    //// Add Marker on Click
-    this.map.on('click', (event) => {
-      const coordinates = [event.lngLat.lng, event.lngLat.lat]
-      const newMarker   = new GeoJson(coordinates, { message: this.message });
-      console.log(coordinates);
-    });
-
     this.map.on('load', (event) => {
       this.map.addSource('everycountry', {
-        'type': 'vector',
-        'url': 'mapbox://danielgeerts.0e8dwloy',
+        type: 'vector',
+        url: 'mapbox://danielgeerts.0e8dwloy',
       });
 
       this.map.addLayer({
@@ -84,22 +60,8 @@ export class MapBoxComponent implements OnInit{
           'fill-outline-color' : 'rgba(0,0,0,0.75)',
           'fill-color':  'rgba(139,0,139,0.5)'
         },
-        filter: this.mapService.getVisitedCountries(),
+        filter: ['!in', 'NAME', 'Antarctica'],
       }, 'holiday_overlay');
-
-      /*this.map.addLayer({
-        "id": "countries-highlighted",
-        "type": "fill",
-        "source": "everycountry",
-        "source-layer": "ne_10m_admin_0_countries-8bj9st",
-        "paint": {
-          "fill-outline-color": "rgba(0,0,0,0)",
-          "fill-color": "rgba(255,255,255,0.25)",
-          "fill-opacity": 1
-        },
-      }, 'holiday_overlay');*/
-
-      let list = ['!in', 'NAME', 'Antarctica', 'Netherlands'];
 
 
       this.map.on('click', (e: any) => {
@@ -107,20 +69,14 @@ export class MapBoxComponent implements OnInit{
         const bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
         const features = this.map.queryRenderedFeatures(bbox, { layers: ['country-layer'] });
 
-        let f;
-        for (f of features) {
+        for (const f of features) {
           console.log('clickedOn: ' + f.properties.NAME);
-          this.addCountry(list, f.properties.NAME);
+          if (!this.list.includes(f.properties.NAME)) {
+            this.list.push(f.properties.NAME);
+          }
         }
-
-        this.map.setFilter('country-layer', list);
+        this.map.setFilter('country-layer', this.list);
       });
     });
-  }
-
-  addCountry(arr: string[], data: string): void {
-    if (arr && data) {
-      arr.push(data);
-    }
   }
 }
