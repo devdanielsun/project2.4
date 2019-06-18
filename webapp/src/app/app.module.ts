@@ -7,11 +7,13 @@ import { MapboxModule } from './mapbox/mapbox.module';
 import { MapService } from './mapbox/maps/map.service';
 
 import {RouteRoutingModule} from './routing/routing.module';
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
