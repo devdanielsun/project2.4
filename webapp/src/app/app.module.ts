@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { MapboxModule } from './mapbox/mapbox.module';
 import { MapService } from './mapbox/maps/map.service';
 
 import {RouteRoutingModule} from './routing/routing.module';
@@ -17,7 +16,6 @@ import { AuthComponent } from './auth/auth.component';
   ],
   imports: [
     BrowserModule,
-    MapboxModule,
     RouteRoutingModule,
 
   ],

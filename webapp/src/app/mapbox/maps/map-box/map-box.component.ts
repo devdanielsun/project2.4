@@ -38,8 +38,10 @@ export class MapBoxComponent implements OnInit {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
+      center: [10, 45],
       zoom: 1,
-      center: [0, 0]
+      minZoom: 1,
+      maxZoom: 9,
     });
 
     /// Add map controls
