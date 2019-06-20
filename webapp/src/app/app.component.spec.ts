@@ -7,7 +7,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        ReactiveFormsModule
+        //ReactiveFormsModule
       ],
       declarations: [
         AppComponent
