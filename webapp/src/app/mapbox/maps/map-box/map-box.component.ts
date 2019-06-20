@@ -15,7 +15,7 @@ export class MapBoxComponent implements OnInit {
   map: mapboxgl.Map;
   style = 'mapbox://styles/danielgeerts/cjx0c0f3x06yt1cs3yfskhjhv';
 
-  private list: string[] = ['!in', 'NAME', 'Antarctica', 'Netherlands'];
+  private list: string[] = ['!in', 'NAME', 'Antarctica'];
 
   constructor(private mapService: MapService) { }
 
@@ -38,8 +38,10 @@ export class MapBoxComponent implements OnInit {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
+      center: [10, 45],
       zoom: 1,
-      center: [0, 0]
+      minZoom: 1,
+      maxZoom: 9,
     });
 
     /// Add map controls
@@ -65,8 +67,11 @@ export class MapBoxComponent implements OnInit {
 
 
       this.map.on('click', (e: any) => {
+        // Add new pinpoint to the map
+        this.createNewPinpoint(this.map, e.lngLat.lng, e.lngLat.lat);
+
         // set bbox as 5px reactangle area around clicked point
-        const bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+        const bbox = [[e.point.x - 3, e.point.y - 3], [e.point.x + 3, e.point.y + 3]];
         const features = this.map.queryRenderedFeatures(bbox, { layers: ['country-layer'] });
 
         for (const f of features) {
@@ -78,5 +83,43 @@ export class MapBoxComponent implements OnInit {
         this.map.setFilter('country-layer', this.list);
       });
     });
+  }
+
+  createNewPinpoint(map: any, lng: number, lat: number) {
+    console.log("Create new marker on -> " + 'pinpoint' + lng + lat);
+// tslint:disable-next-line: only-arrow-functions
+    let randomIMG = '../../../../assets/';
+
+    randomIMG += this.getRandomBoolean() ? 'blue-marker.png' : 'red-marker.png';
+
+    map.loadImage(randomIMG, function(error, image) {
+      if (error) { throw error; }
+      map.addImage('pinpoint' + lng + lat, image);
+      map.addLayer({
+        id: 'point' + lng + lat,
+        type: 'symbol',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [lng, lat]
+              }
+            }]
+          }
+        },
+        layout: {
+          'icon-image': 'pinpoint' + lng + lat,
+          'icon-size': 0.75,
+        }
+      });
+    });
+  }
+
+  getRandomBoolean(): boolean {
+    return Math.random() >= 0.5;
   }
 }
