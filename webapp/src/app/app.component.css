@@ -1,0 +1,45 @@
+.openmenu {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    margin: 0;
+    padding: 10px;
+    font-size: 0;
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+    border-radius: 15px;
+    z-index: 9999;
+}
+  
+.openmenu i {
+    font-size: 21pt;
+    color: white;
+    padding: 15px;
+}
+  
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Rotate first bar */
+:host(.change) .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-8px, 6px) ;
+    transform: rotate(-45deg) translate(-8px, 6px) ;
+}
+
+/* Fade out the second bar */
+:host(.change) .bar2 {
+    opacity: 0;
+}
+
+/* Rotate last bar */
+:host(.change) .bar3 {
+    -webkit-transform: rotate(45deg) translate(-10px, -8px) ;
+    transform: rotate(45deg) translate(-10px, -8px) ;
+}
