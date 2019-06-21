@@ -6,9 +6,6 @@ import { GuardService as AuthGuard } from '../auth/guard.service';
 
 
 const routes: Routes = [
-  { path: '',
-    redirectTo: 'login',
-    pathMatch:  'full'},
   {
     path: 'login',
     loadChildren: '../login/login.module#LoginModule',
@@ -18,10 +15,14 @@ const routes: Routes = [
     loadChildren: '../registration/registration.module#RegistrationModule',
   },
   {
+    path: 'unauthorized',
+    loadChildren: '../redirect/unauthorized/unauthorized.module#UnauthorizedModule',
+  },
+  {
     path: 'map',
     loadChildren: '../mapbox/mapbox.module#MapboxModule',
     canActivate: [AuthGuard]
-  },
+  }
 ];
 
 @NgModule({
