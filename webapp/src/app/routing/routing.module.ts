@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'map',
     loadChildren: '../mapbox/mapbox.module#MapboxModule',
     canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    loadChildren: '../redirect/notfound/notfound.module#NotfoundModule'
   }
 ];
 

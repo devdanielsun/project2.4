@@ -1,6 +1,6 @@
 .openmenu {
     display: block;
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     margin: 5px;
     padding: 10px;
