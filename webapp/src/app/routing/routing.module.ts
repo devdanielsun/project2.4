@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { GuardService as AuthGuard } from '../auth/guard.service';
 
 
-
 const routes: Routes = [
   { path: '',
     redirectTo: 'login',
@@ -29,6 +28,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   providers: [AuthGuard],
   exports: [RouterModule]
+
 })
 
 
