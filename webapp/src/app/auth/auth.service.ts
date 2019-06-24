@@ -44,22 +44,27 @@ export class AuthService {
     }
     return this.token;
   }
+
+  public isExpired(token) {
+    const helper = new JwtHelperService();
+    const decoded = helper.decodeToken(token);
+    if (decoded.exp === undefined) {
+      return true;
+    }
+    const datum = new Date(0);
+    datum.setUTCSeconds(decoded.exp);
+    return !(datum.valueOf() > new Date().valueOf());
+  }
+
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('ACCESS_TOKEN');
-
-    console.log(token);
     // Check whether the token is expired and return
     // true or false
     if (token) {
-      const helper = new JwtHelperService();
-      const decoded = helper.decodeToken(token);
-      if (decoded.exp === undefined) {
+      if (this.isExpired(token)) {
         return false;
       }
-      const datum = new Date(0);
-      datum.setUTCSeconds(decoded.exp);
-      return (datum.valueOf() > new Date().valueOf());
-
+      return true;
     } else {
       return false;
     }
