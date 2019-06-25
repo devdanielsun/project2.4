@@ -4,6 +4,12 @@ body {
   margin: 0px;
 }
 
+.row {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
 .fullpage {
   background-color: lavender;
   position: absolute;

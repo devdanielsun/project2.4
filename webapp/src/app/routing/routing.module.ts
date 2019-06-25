@@ -7,6 +7,10 @@ import { GuardService as AuthGuard } from '../auth/guard.service';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: '../home/home.module#HomeModule',
+  },
+  {
     path: 'login',
     loadChildren: '../login/login.module#LoginModule',
   },
