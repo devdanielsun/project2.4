@@ -5,6 +5,7 @@ import { UserI } from '../jwt/user';
 import { JwtResponseI } from '../jwt/jwt-response';
 import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable()
@@ -43,12 +44,26 @@ export class AuthService {
     }
     return this.token;
   }
+
+  public isExpired(token) {
+    const helper = new JwtHelperService();
+    const decoded = helper.decodeToken(token);
+    if (decoded.exp === undefined) {
+      return true;
+    }
+    const datum = new Date(0);
+    datum.setUTCSeconds(decoded.exp);
+    return !(datum.valueOf() > new Date().valueOf());
+  }
+
   public isAuthenticated(): boolean {
-    const token = localStorage. getItem('ACCESS_TOKEN');
-    console.log(token);
+    const token = localStorage.getItem('ACCESS_TOKEN');
     // Check whether the token is expired and return
     // true or false
     if (token) {
+      if (this.isExpired(token)) {
+        return false;
+      }
       return true;
     } else {
       return false;
