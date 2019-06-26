@@ -3,6 +3,8 @@ import { LoginComponent } from './../login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GuardService as AuthGuard } from '../auth/guard.service';
+import {AuthService} from "../auth/auth.service";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 
 const routes: Routes = [
@@ -35,7 +37,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  providers: [AuthGuard],
+  providers: [AuthGuard,{provide: LocationStrategy, useClass: HashLocationStrategy}],
   exports: [RouterModule]
 
 })
