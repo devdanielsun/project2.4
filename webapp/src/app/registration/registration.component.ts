@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RegistrationModule } from './registration.module';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormsModule} from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { RegUserI } from '../jwt/reg-user';
 
 
 @Component({
@@ -11,7 +15,7 @@ import { FormsModule} from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
     userForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private http: HttpClient) {
   }
 
     ngOnInit() {
@@ -25,16 +29,21 @@ export class RegistrationComponent implements OnInit {
     }
 
     onSubmit(userData) {
-      if(userData.password === userData.confirmPassword){
-        if(this.userForm.valid){
-          alert('User form is valid!!');
-        }
-        else {
-          alert('User form is not valid!!');
-        }
-      }
-      else{
-        alert('Passwords are not the same');
+      if (userData.password === userData.confirmPassword) {
+
+      if (this.userForm.valid) {
+        const rUser: RegUserI = {
+          name: userData.name,
+          lastname: userData.lastName,
+          email: userData.email,
+          password: userData.password,
+        };
+        this.authService.register(rUser).subscribe(res => {
+          this.router.navigateByUrl('/map');
+        });
+      } else {
+        alert('User form is not valid!!');
       }
     }
+  }
 }

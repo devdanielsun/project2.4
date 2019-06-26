@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 const expressJwt = require('express-jwt');
 
 const users = [
-  { id: 1, name: 'bart', password: 'henker' },
-  { id: 2, name: 'test', password: 'test' },
+  { id: 1, email: 'bart', password: 'henker' },
+  { id: 2, email: 'f.molenaars@hotmail.com', password: 'test' },
 ];
 
 const privateKey = fs.readFileSync('./private.pem', 'utf8');
@@ -19,7 +19,7 @@ const checkIfAuthenticated = expressJwt({
 });
 
 const signOptions = {
-  expiresIn: "30d",
+  expiresIn: "30s",
   algorithm: 'ES256'
 };
 
@@ -30,11 +30,11 @@ const app = express();
 // Add headers
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', '*');
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -55,18 +55,18 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/login', function (req, res) {
-  if (req.body.name && req.body.password) {
-    var name = req.body.name;
+  if (req.body.email && req.body.password) {
+    var email = req.body.email;
   }
 
-  var user = users[_.findIndex(users, { name: name })];
+  var user = users[_.findIndex(users, { email: email })];
 
   if (!user) {
     res.status(401).json({ message: 'no such user found' });
   }
 
   if (user.password === req.body.password) {
-    let payload = { name, id: user.id };
+    let payload = { email, id: user.id };
     let token = jwt.sign(payload, privateKey, signOptions);
     res.json({
       message: 'ok',
