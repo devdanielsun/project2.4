@@ -14,10 +14,20 @@ body {
     display: inline-block;
 }
 
+.friend-img {
+    width: 50px;
+    height: 50px;
+}
+
+.list-friends {
+    text-align: left;
+}
+
 .user-img {
     width: 150px;
     height: 150px;
 }
+
 
 .user-edit {
     position: absolute;

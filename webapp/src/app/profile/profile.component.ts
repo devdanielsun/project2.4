@@ -1,4 +1,9 @@
+import { ProfileService } from './profile.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { ProfileI } from './profile';
 
 @Component({
   selector: 'app-user-profile',
@@ -6,7 +11,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
   name: string;
   lastname: string;
   email: string;
@@ -14,11 +18,12 @@ export class ProfileComponent implements OnInit {
   mostVisitedCountry: string;
   amountVisitedCountries: number;
   amountTravels: number;
-  totalfriends: number;
 
-  userimg: string;
+  selectedId: number;
+  friends$: Observable<ProfileI[]>;
+  user$: Observable<ProfileI>;
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private service: ProfileService) {
     this.name = 'Daniel';
     this.lastname = 'Codeerts';
     this.email = 'info@codeerts.nl';
@@ -26,12 +31,21 @@ export class ProfileComponent implements OnInit {
     this.mostVisitedCountry = 'Netherlands';
     this.amountVisitedCountries = 4;
     this.amountTravels = 42;
-    this.totalfriends = -1;
-
-    this.userimg = '../../assets/default-user.jpg';
   }
 
   ngOnInit() {
+    this.user$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.service.getFriend(params.get('id')))
+    );
+
+    this.friends$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        // (+) before `params.get()` turns the string into a number
+        this.selectedId = +params.get('id');
+        return this.service.getFriends();
+      })
+    );
   }
 
   addFriend() {
@@ -41,5 +55,4 @@ export class ProfileComponent implements OnInit {
   showMap() {
     alert ('Go to map');
   }
-
 }
