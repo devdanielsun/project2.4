@@ -1,22 +1,17 @@
 .openmenu {
     display: block;
-    position: absolute;
+    position: fixed;
     overflow: hidden;
-    margin: 0;
+    margin: 5px;
     padding: 10px;
     font-size: 0;
     cursor: pointer;
     outline: none;
     background: none;
     border: none;
-    border-radius: 15px;
+    border-radius: 50px;
     z-index: 9999;
-}
-  
-.openmenu i {
-    font-size: 21pt;
-    color: white;
-    padding: 15px;
+    background-color: lightgray;
 }
   
 .bar1, .bar2, .bar3 {

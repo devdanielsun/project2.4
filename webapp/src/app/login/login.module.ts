@@ -1,13 +1,10 @@
-import { LoginRoutingModule } from './login-routing.module';
 import { AuthService } from './../auth/auth.service';
 import { NgModule } from '@angular/core';
-
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 import { LoginComponent } from './login.component';
-
+import { LoginRoutingModule } from './login-routing.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +18,6 @@ import { LoginComponent } from './login.component';
   ],
   providers: [
     AuthService,
-
   ],
   bootstrap: [LoginComponent]
 })
