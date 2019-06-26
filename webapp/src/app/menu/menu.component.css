@@ -23,8 +23,11 @@
     width: 100%;
 }
 
-.main-nav-item {
+.main-nav-item{
     cursor: pointer;
+}
+.fa.fa-address-card{
+    font-size: 85%;
 }
 
 .privacy {
