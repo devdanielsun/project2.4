@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+         <div class="well profile">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-primary user-edit"><span class="fa fa-gear"></span> Verander profiel </button>
+              <div class="row">
+                <div class="col-sm-4">
+                  <img class="user-img img-circle img-responsive" src="{{ userimg }}" alt="">
+                </div>
+                <div class="col-sm-8">
+                  <h2>{{ name }} {{ lastname }}</h2>
+                  {{ email }}
+                  <div class="row">
+                    <div class="col-sm-8"><strong>Most visited country: </strong></div>
+                    <div class="col-sm-4">{{ mostVisitedCountry }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8"><strong>Unlocked countries: </strong></div>
+                    <div class="col-sm-4">{{ amountVisitedCountries }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8"><strong>Number of travels: </strong></div>
+                    <div class="col-sm-4">{{ amountTravels }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+              <div class="col-xs-12 divider text-center">
+                  <div class="col-xs-12 col-sm-6 emphasis">
+                      <h2><strong> {{ totalfriends }} </strong></h2>                    
+                      <p><small>Friends</small></p>
+                      <button class="btn btn-success btn-block" (click)="addFriend()"><span class="fa fa-plus-circle"></span> Add/remove Friend </button>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 emphasis">
+                      <h2><strong> {{ amountVisitedCountries }} </strong></h2>                    
+                      <p><small>Unlocked countries</small></p>
+                      <button class="btn btn-info btn-block" (click)="showMap()"><span class="fa fa-map-signs"></span> Show Maps </button>
+                  </div>
+              </div>
+         </div>                 
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
