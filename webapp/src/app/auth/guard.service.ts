@@ -12,6 +12,7 @@ export class GuardService implements CanActivate {
       this.router.navigate(['/unauthorized']);
       return false;
     }
+     // this.auth.logout();
     return true;
   }
 }
