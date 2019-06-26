@@ -15,6 +15,8 @@ import { AuthComponent } from './auth/auth.component';
 import { CommonModule } from '@angular/common';
 import { GuardService } from './auth/guard.service';
 import { MenuComponent } from './menu/menu.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { MenuComponent } from './menu/menu.component';
     BrowserAnimationsModule,
     BrowserModule,
     RouteRoutingModule,
+    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [MapService, GuardService, AuthService],
   bootstrap: [AppComponent]
