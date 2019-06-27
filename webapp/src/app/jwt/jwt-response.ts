@@ -1,6 +1,7 @@
 export interface JwtResponseI {
+    message: string;
     token: string;
     expiresIn: string;
-    id: number;
+    id: string;
     email: string;
 }

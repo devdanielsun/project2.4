@@ -14,7 +14,10 @@ export class AuthService {
   BACKEND_SERVER = '145.37.156.225:8080';
   authSubject = new BehaviorSubject(false);
   private token: string;
-  constructor(private httpClient: HttpClient) { }
+  
+  constructor(private httpClient: HttpClient) {
+    this.isAuthenticated();
+  }
 
   login(user: UserI): Observable<JwtResponseI> {
     console.log(user);
@@ -22,7 +25,7 @@ export class AuthService {
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn);
+          this.saveToken(res.token, res.expiresIn, res.id);
         }
       }
     ));
@@ -31,6 +34,7 @@ export class AuthService {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('EXPIRES_IN');
+    localStorage.removeItem('ID');
   }
 
   register(regUser: RegUserI): Observable<JwtResponseI> {
@@ -39,16 +43,17 @@ export class AuthService {
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn);
+          this.saveToken(res.token, res.expiresIn, res.id);
         }
 
       }
     ));
-}
+  }
 
-  private saveToken(token: string, expiresIn: string): void {
+  private saveToken(token: string, expiresIn: string, id: string): void {
     localStorage.setItem('ACCESS_TOKEN', token),
     localStorage.setItem('EXPIRES_IN', expiresIn);
+    localStorage.setItem('ID', id);
     this.token = token;
   }
   public getToken(): string {
