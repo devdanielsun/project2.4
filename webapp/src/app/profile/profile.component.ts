@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit {
   friends$: Observable<ProfileI[]>;
   user$: Observable<ProfileI>;
 
+  showMSG$: Observable<any>;
+
   constructor(private route: ActivatedRoute, private service: ProfileService) {
     this.mostVisitedCountry = 'Netherlands';
     this.amountVisitedCountries = 4;
@@ -40,6 +42,12 @@ export class ProfileComponent implements OnInit {
         // (+) before `params.get()` turns the string into a number
         this.selectedId = + params.get('id');
         return this.service.getFriends();
+      })
+    );
+
+    this.showMSG$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        return this.service.getSecret();
       })
     );
   }

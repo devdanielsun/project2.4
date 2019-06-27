@@ -2,7 +2,8 @@
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8">
-         <div class="well profile">
+         <div class="well profile" *ngIf="showMSG$ | async as showMSG">
+            {{ showMSG.message }}
             <div class="col-sm-12">
               <button type="button" class="btn btn-primary user-edit"><span class="fa fa-gear"></span> Verander profiel </button>
               <div class="row" *ngIf="user$ | async as user">

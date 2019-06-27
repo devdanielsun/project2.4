@@ -23,6 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
     MenuComponent,
   ],
   imports: [
+    HttpClientModule,
     CommonModule,
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
