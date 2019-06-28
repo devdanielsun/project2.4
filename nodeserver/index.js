@@ -19,7 +19,7 @@ const checkIfAuthenticated = expressJwt({
 });
 
 const signOptions = {
-  expiresIn: "30s",
+  expiresIn: "30d",
   algorithm: 'ES256'
 };
 
@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', '*');
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
