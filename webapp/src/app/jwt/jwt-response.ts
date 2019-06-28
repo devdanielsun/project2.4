@@ -1,7 +1,7 @@
 export interface JwtResponseI {
+    userId: number;
+    tokenValid: boolean;
+    newToken: string;
     message: string;
-    token: string;
-    expiresIn: string;
-    id: string;
-    email: string;
+    admin: boolean;
 }

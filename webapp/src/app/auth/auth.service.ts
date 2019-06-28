@@ -10,8 +10,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
-  BackendCasper: '145.37.156.115:8080';
-  AUTH_SERVER = 'http://localhost:5000/api';
+  BackendCasper = '145.37.156.115:8080';
+  AUTH_SERVER = 'http://145.37.156.115:8080'//'http://localhost:5000/api';
   //'http://localhost:5000/api';
   BACKEND_SERVER = '145.37.156.225:8080';
   authSubject = new BehaviorSubject(false);
@@ -28,42 +28,46 @@ export class AuthService {
   }
 
   login(user: UserI): Observable<JwtResponseI> {
-    console.log(user);
-    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/login`, user).pipe(tap(
+    console.log(JSON.stringify(user));
+    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/login`, JSON.stringify(user)).pipe(tap(
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn, res.id);
+          this.saveToken(res.newToken, res.userId);
           this.loggedIn$.next(true);
         }
+      },
+      (err) => {
+        console.log(err);
       }
     ));
   }
   logout(): void {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
-    localStorage.removeItem('EXPIRES_IN');
     localStorage.removeItem('ID');
     this.loggedIn$.next(false);
   }
 
   register(regUser: RegUserI): Observable<JwtResponseI> {
-    console.log(regUser);
-    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/registration`, regUser).pipe(tap(
+    console.log(JSON.stringify(regUser));
+    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/registration`, JSON.stringify(regUser)).pipe(tap(
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn, res.id);
+          this.saveToken(res.newToken, res.userId);
           this.loggedIn$.next(true);
         }
+      },
+      (err) => {
+        console.log(err);
       }
     ));
   }
 
-  private saveToken(token: string, expiresIn: string, id: string): void {
+  private saveToken(token: string, id: number): void {
     localStorage.setItem('ACCESS_TOKEN', token),
-    localStorage.setItem('EXPIRES_IN', expiresIn);
-    localStorage.setItem('ID', id);
+    localStorage.setItem('ID', id.toString());
     this.token = token;
   }
   public getToken(): string {

@@ -8,7 +8,11 @@ const routes: Routes = [
   {
     path: '',
     component: MapBoxComponent
-  }
+  },
+  {
+    path: ':id',
+    component: MapBoxComponent
+  },
 ];
 
 @NgModule({
