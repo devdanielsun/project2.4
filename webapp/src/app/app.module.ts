@@ -10,11 +10,12 @@ import { AppComponent } from './app.component';
 import { MapService } from './mapbox/maps/map.service';
 import { RouteRoutingModule } from './routing/routing.module';
 import { AuthComponent } from './auth/auth.component';
-import { CommonModule } from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { GuardService } from './auth/guard.service';
 import { MenuComponent } from './menu/menu.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { Interceptor } from './auth/intercepter.service';
-
 
 @NgModule({
   declarations: [
@@ -29,13 +30,19 @@ import { Interceptor } from './auth/intercepter.service';
     BrowserAnimationsModule,
     BrowserModule,
     RouteRoutingModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
+
   providers: [MapService, GuardService, AuthService,
     {provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,
     multi: true
-    }
+    },
+    {provide: LocationStrategy,
+     useClass: HashLocationStrategy
+    },
   ],
+
   bootstrap: [AppComponent]
 })
 
