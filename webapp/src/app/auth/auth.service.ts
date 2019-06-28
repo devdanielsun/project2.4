@@ -17,7 +17,8 @@ export class AuthService {
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+   }
 
   get isLoggedIn() {
     return this.loggedIn$.asObservable();
@@ -53,7 +54,7 @@ export class AuthService {
         }
       }
     ));
-}
+  }
 
   private saveToken(token: string, expiresIn: string): void {
     localStorage.setItem('ACCESS_TOKEN', token),
@@ -76,7 +77,7 @@ export class AuthService {
     datum.setUTCSeconds(decoded.exp);
     return !(datum.valueOf() > new Date().valueOf());
   }
-  public getIsLoggedIn(){
+  public getIsLoggedIn() {
     return this.loggedIn;
   }
 

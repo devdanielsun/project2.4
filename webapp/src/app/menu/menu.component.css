@@ -26,6 +26,10 @@
 .main-nav-item{
     cursor: pointer;
 }
+fa.fa-globe{
+    font-size: 120%;
+}
+
 .fa.fa-address-card{
     font-size: 85%;
 }
