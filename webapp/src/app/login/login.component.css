@@ -17,12 +17,16 @@
   left: 0;
   right: 0;
   z-index: -1111;
+  background-color: #e3e3e3;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
 }
 
 .earth {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 600px;
+  height: 600px;
   margin: 3em auto;
   background: #888 url('../../assets/earthmap.jpg') 0 0 repeat;
   background-size: auto;
@@ -31,17 +35,17 @@
   -webkit-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  background-size: 630px;
-  animation: rotate 4s linear infinite;
-  -webkit-animation: rotate 4s linear infinite;
-  -moz-animation: rotate 4s linear infinite;
-  -ms-animation: rotate 4s linear infinite;
-  -o-animation: rotate 4s linear infinite;
-  -webkit-transition: -webkit-transform 200ms linear;
+  background-size: 1560px; /* 630*/
+  animation: rotate 6s linear infinite;
+  -webkit-animation: rotate 6s linear infinite;
+  -moz-animation: rotate 6s linear infinite;
+  -ms-animation: rotate 6s linear infinite;
+  -o-animation: rotate 6s linear infinite;
+  -webkit-transition: -webkit-transform 600ms linear;
   -webkit-transform-style: preserve-3d;
   -moz-transition: -moz-transform 200ms linear;
   -moz-transform-style: preserve-3d;
-  transition: transform 200ms linear;
+  transition: transform 400ms linear;
   transform-style: preserve-3d;
   box-shadow: inset 20px 0 80px 6px rgba(0, 0, 0, 1);
   -moz-box-shadow: inset 20px 0 80px 6px rgba(0, 0, 0, 1);
@@ -84,7 +88,7 @@
 
 @keyframes rotate {
   0% {background-position: 0 0;}
-  100% {background-position: 630px 0;}
+  100% {background-position: 1560px 0;}
 }
 
 
@@ -109,7 +113,7 @@
     text-transform: uppercase;
     font-size: 8em;
     white-space: nowrap;
-    font-size: 12vw;
+    font-size: 10vw;
     z-index: 1000;
     font-family: 'Bangers', cursive;
     text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.7);
@@ -118,3 +122,60 @@
     @include transition-duration(0.5s);
 
 }
+
+.whitebox{
+  background-color: #ffffff;
+  -webkit-box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);
+  -moz-box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);
+  box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);
+  padding: 15px;
+}
+
+.logbtn{
+  font-size: 20px;
+  padding: 10px 10px;
+}
+.logform{
+  font-size: 18px;
+}
+
+.logintext{
+  font-weight: 500;
+  margin: 15px 0;
+}
+
+.noaccount{
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .form-rowmobile{
+    display: block;
+  }
+
+  .forminput{
+    margin-bottom: 15px;
+  }
+  .firstinput{
+    margin-top: 15px;
+  }
+
+  .earth{
+    width: 300px;
+    height: 300px;
+    margin-top: 97%;
+    background-size: 630px;
+  }
+
+  .title{
+    font-size: 10vw;
+  }
+
+  @keyframes rotate {
+    0% {background-position: 0 0;}
+    100% {background-position: 630px 0;}
+  }
+
+}
+
