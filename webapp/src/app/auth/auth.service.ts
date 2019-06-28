@@ -20,7 +20,8 @@ export class AuthService {
   private loggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) {
-   }
+    this.isAuthenticated();
+  }
 
   get isLoggedIn() {
     return this.loggedIn$.asObservable();
@@ -32,7 +33,7 @@ export class AuthService {
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn);
+          this.saveToken(res.token, res.expiresIn, res.id);
           this.loggedIn$.next(true);
         }
       }
@@ -42,6 +43,7 @@ export class AuthService {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('EXPIRES_IN');
+    localStorage.removeItem('ID');
     this.loggedIn$.next(false);
   }
 
@@ -51,16 +53,18 @@ export class AuthService {
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn);
+          this.saveToken(res.token, res.expiresIn, res.id);
           this.loggedIn$.next(true);
         }
       }
     ));
   }
 
-  private saveToken(token: string, expiresIn: string): void {
+  private saveToken(token: string, expiresIn: string, id: string): void {
     localStorage.setItem('ACCESS_TOKEN', token),
     localStorage.setItem('EXPIRES_IN', expiresIn);
+    localStorage.setItem('ID', id);
+    this.token = token;
   }
   public getToken(): string {
     if (!this.token) {
