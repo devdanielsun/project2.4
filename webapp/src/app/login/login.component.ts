@@ -14,6 +14,8 @@ import { UserI } from '../jwt/user';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  submitted: any;
+  f: any;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
 

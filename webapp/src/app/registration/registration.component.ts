@@ -13,6 +13,8 @@ import { RegUserI } from '../jwt/reg-user';
 })
 export class RegistrationComponent implements OnInit {
     userForm: FormGroup;
+  submitted: any;
+  f: any;
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private http: HttpClient) {
   }
 
