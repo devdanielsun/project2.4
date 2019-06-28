@@ -1,6 +1,11 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
-body {
-    font-family: 'Lato', 'sans-serif';
+.upperprofile {
+    width: 100%;
+    max-width: 100%;
+    background: url('../../assets/background-1.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .row {
@@ -12,6 +17,20 @@ body {
 .profile {
     min-height: 355px;
     display: inline-block;
+}
+
+.friend-img {
+    width: 50px;
+    height: 50px;
+}
+
+.list-friends {
+    text-align: left;
+}
+
+.list-group-item {
+    padding: 15px 0px;
+    cursor: pointer;
 }
 
 .user-img {
@@ -28,6 +47,7 @@ body {
 
 .divider {
     border-top:1px solid rgba(0,0,0,0.1);
+    margin-top: 25px;
 }
 
 .emphasis {

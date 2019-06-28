@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const expressJwt = require('express-jwt');
 
 const users = [
-  { id: 1, email: 'bart', password: 'henker' },
+  { id: 1, email: 'daniel@nl', password: 'test' },
   { id: 2, email: 'f.molenaars@hotmail.com', password: 'test' },
 ];
 
@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -71,7 +71,9 @@ app.post('/api/login', function (req, res) {
     res.json({
       message: 'ok',
       token: token,
-      expiresIn: jwt.decode(token).exp
+      expiresIn: jwt.decode(token).exp,
+      id: user.id,
+      email: user.email,
     });
   } else {
     res.status(401).json({ message: 'password did not match' });
