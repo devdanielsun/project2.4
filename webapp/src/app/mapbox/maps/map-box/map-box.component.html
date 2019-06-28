@@ -1,1 +1,4 @@
+<div class="row" *ngIf="locations$ | async as locations" style="text-align: center; margin: 0 auto;">
+    <p style="text-align: center; width: 100%;">{{ locations }}</p>
+</div>
 <div class="map" id="map"></div>

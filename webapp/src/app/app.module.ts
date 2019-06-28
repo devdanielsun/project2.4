@@ -15,7 +15,7 @@ import { GuardService } from './auth/guard.service';
 import { MenuComponent } from './menu/menu.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { Interceptor } from './auth/intercepter.service';
+import { Interceptor } from './auth/interceptor.service';
 
 @NgModule({
   declarations: [

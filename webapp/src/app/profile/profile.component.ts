@@ -34,7 +34,8 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.service.getFriend(params.get('id') ? params.get('id') : localStorage.getItem('ID')))
+        this.service.getFriend(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
+      )
     );
 
     this.friends$ = this.route.paramMap.pipe(

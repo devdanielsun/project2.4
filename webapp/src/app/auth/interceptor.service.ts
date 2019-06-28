@@ -25,21 +25,36 @@ export class Interceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (this.auth.getToken()) {
-      console.log('hij doet het');
+      console.log('interceptor doet het met token');
       const temp = request.clone({
         setHeaders: {
+          'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${this.auth.getToken()}`
         }
       });
       return next.handle(temp).pipe(catchError(error => {
-      // intercept the respons error and displace it to the console
-      console.log(error);
-      // return the error to the method that called it
-      return throwError(error);
-    }));
+        // intercept the respons error and displace it to the console
+        console.log(error);
+        // return the error to the method that called it
+        return throwError(error);
+      }));
     } else {
-      return next.handle(request);
+      console.log('interceptor doet het zonder token');
+      const temp = request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        }
+      });
+      console.log(request.method);
+      return next.handle(temp).pipe(catchError(error => {
+        // intercept the respons error and displace it to the console
+        console.log(error);
+        // return the error to the method that called it
+        return throwError(error);
+      }));
     }
   }
 }

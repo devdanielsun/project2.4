@@ -2,6 +2,9 @@ import { MapService } from './../map.service';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { GeoJson, FeatureCollection } from '../map';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -17,10 +20,17 @@ export class MapBoxComponent implements OnInit {
 
   private list: string[] = ['!in', 'NAME', 'Antarctica'];
 
-  constructor(private mapService: MapService) { }
+  locations$: Observable<string>;
+
+  constructor(private route: ActivatedRoute, private mapService: MapService) { }
 
   ngOnInit() {
     this.initializeMap();
+    this.locations$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.mapService.getLocations(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
+      )
+    );
   }
 
   private initializeMap() {
