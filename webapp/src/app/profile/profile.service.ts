@@ -14,13 +14,13 @@ export class ProfileService {
   BackendCasper: '145.37.156.115:8080';
   constructor(private httpClient: HttpClient) { }
 
-  getFriends(id: number): Observable<ProfileI[]> {
+  getFriends(id: string): Observable<ProfileI[]> {
     // TODO: send the message _after_ fetching the heroes
     const myFriends = this.httpClient.get<ProfileI[]>(`${this.BackendCasper}/user/id/friends`);
     return myFriends;
   }
-  getFriend(id: number | string) {
-    return this.getFriends().pipe(
+  getFriend(id: string) {
+    return this.getFriends(id).pipe(
       // (+) before `id` turns the string into a number
       map((profiles: ProfileI[]) => profiles.find(user => user.id === +id))
     );

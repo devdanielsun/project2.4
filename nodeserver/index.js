@@ -19,7 +19,7 @@ const checkIfAuthenticated = expressJwt({
 });
 
 const signOptions = {
-  expiresIn: "30s",
+  expiresIn: "30d",
   algorithm: 'ES256'
 };
 
@@ -69,12 +69,12 @@ app.post('/api/login', function (req, res) {
     let payload = { email, id: user.id };
     let token = jwt.sign(payload, privateKey, signOptions);
     res.json({
-      message: 'ok',
-      token: token,
-      expiresIn: jwt.decode(token).exp,
-      id: user.id,
-      email: user.email,
-    });
+      userID: user.id,
+      tokenValid: true,
+      newToken: token,
+      message: null,
+      admin: true
+    })
   } else {
     res.status(401).json({ message: 'password did not match' });
   }
