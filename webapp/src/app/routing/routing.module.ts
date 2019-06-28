@@ -30,6 +30,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'profile',
+    loadChildren: '../profile/profile.module#ProfileModule',
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     loadChildren: '../redirect/notfound/notfound.module#NotfoundModule'
   }

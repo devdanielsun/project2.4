@@ -3,12 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 //import { AuthRoutingModule } from './auth-routing.module';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { LoginModule } from '../login/login.module';
-import { Interceptor } from './intercepter.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GuardService } from './guard.service';
+import { Interceptor } from './interceptor.service';
 
 
 
@@ -19,15 +18,13 @@ import { GuardService } from './guard.service';
     CommonModule,
     //AuthRoutingModule,
     FormsModule,
-    HttpClientModule,
+    //HttpClientModule,
     LoginModule,
     MapboxModule
   ],
   providers: [ AuthService,
     GuardService,
-    {provide: HTTP_INTERCEPTORS,
-    useClass: Interceptor,
-    multi: true,
-  }]
+    Interceptor
+  ]
 })
 export class AuthModule { }

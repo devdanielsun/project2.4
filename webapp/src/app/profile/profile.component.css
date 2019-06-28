@@ -1,0 +1,100 @@
+.upperprofile {
+    width: 100%;
+    max-width: 100%;
+    background: url('../../assets/background-1.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.row {
+    text-align: left;
+    margin: 20px 0px;
+    padding: 0;
+}
+
+.profile {
+    min-height: 355px;
+    display: inline-block;
+}
+
+.friend-img {
+    width: 50px;
+    height: 50px;
+}
+
+.list-friends {
+    text-align: left;
+}
+
+.list-group-item {
+    padding: 15px 0px;
+    cursor: pointer;
+}
+
+.user-img {
+    width: 150px;
+    height: 150px;
+}
+
+.user-edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 5555;
+}
+
+.divider {
+    border-top:1px solid rgba(0,0,0,0.1);
+    margin-top: 25px;
+}
+
+.emphasis {
+    border-top: 4px solid transparent;
+}
+.emphasis:hover {
+    border-top: 4px solid #1abc9c;
+}
+.emphasis h2 {
+    margin-bottom:0;
+}
+span.tags {
+    background: #1abc9c;
+    border-radius: 2px;
+    color: #f5f5f5;
+    font-weight: bold;
+    padding: 2px 4px;
+}
+.dropdown-menu {
+    background-color: #34495e;    
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    width: 250px;
+    margin-left: -125px;
+    left: 50%;
+}
+
+.dropdown-menu .divider {
+    background:none;    
+}
+
+.dropdown-menu>li>a {
+    color:#f5f5f5;
+}
+
+.dropup .dropdown-menu {
+    margin-bottom:10px;
+}
+
+.dropup .dropdown-menu:before {
+    content: "";
+    border-top: 10px solid #34495e;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -10px;
+    z-index: 10;
+}

@@ -14,7 +14,16 @@ export class AuthService {
   BACKEND_SERVER = '145.37.156.225:8080';
   authSubject = new BehaviorSubject(false);
   private token: string;
-  constructor(private httpClient: HttpClient) { }
+  private loggedIn = false;
+  private loggedIn$ = new BehaviorSubject<boolean>(false);
+
+  constructor(private httpClient: HttpClient) {
+    this.isAuthenticated();
+  }
+
+  get isLoggedIn() {
+    return this.loggedIn$.asObservable();
+  }
 
   login(user: UserI): Observable<JwtResponseI> {
     console.log(user);
@@ -22,7 +31,8 @@ export class AuthService {
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn);
+          this.saveToken(res.token, res.expiresIn, res.id);
+          this.loggedIn$.next(true);
         }
       }
     ));
@@ -31,6 +41,8 @@ export class AuthService {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('EXPIRES_IN');
+    localStorage.removeItem('ID');
+    this.loggedIn$.next(false);
   }
 
   register(regUser: RegUserI): Observable<JwtResponseI> {
@@ -39,16 +51,17 @@ export class AuthService {
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
-          this.saveToken(res.token, res.expiresIn);
+          this.saveToken(res.token, res.expiresIn, res.id);
+          this.loggedIn$.next(true);
         }
-
       }
     ));
-}
+  }
 
-  private saveToken(token: string, expiresIn: string): void {
+  private saveToken(token: string, expiresIn: string, id: string): void {
     localStorage.setItem('ACCESS_TOKEN', token),
     localStorage.setItem('EXPIRES_IN', expiresIn);
+    localStorage.setItem('ID', id);
     this.token = token;
   }
   public getToken(): string {
@@ -68,6 +81,9 @@ export class AuthService {
     datum.setUTCSeconds(decoded.exp);
     return !(datum.valueOf() > new Date().valueOf());
   }
+  public getIsLoggedIn() {
+    return this.loggedIn;
+  }
 
 
   public isAuthenticated(): boolean {
@@ -77,10 +93,13 @@ export class AuthService {
     if (token) {
       if (this.isExpired(token)) {
         this.logout();
+        this.loggedIn$.next(false);
         return false;
       }
+      this.loggedIn$.next(true);
       return true;
     } else {
+      this.loggedIn$.next(false);
       return false;
     }
   }

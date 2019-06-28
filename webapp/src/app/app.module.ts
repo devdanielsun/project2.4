@@ -1,12 +1,10 @@
 import { AuthService } from './auth/auth.service';
 
-
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 import { AppComponent } from './app.component';
 import { MapService } from './mapbox/maps/map.service';
@@ -17,6 +15,7 @@ import { GuardService } from './auth/guard.service';
 import { MenuComponent } from './menu/menu.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { Interceptor } from './auth/intercepter.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,17 @@ import { environment } from '../environments/environment';
     RouteRoutingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, MapService, GuardService, AuthService],
+
+  providers: [MapService, GuardService, AuthService,
+    {provide: HTTP_INTERCEPTORS,
+    useClass: Interceptor,
+    multi: true
+    },
+    {provide: LocationStrategy,
+     useClass: HashLocationStrategy
+    },
+  ],
+
   bootstrap: [AppComponent]
 })
 

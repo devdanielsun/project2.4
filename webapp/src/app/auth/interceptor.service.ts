@@ -19,23 +19,28 @@ import { Router } from '@angular/router';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthService, private router: Router) {}
+  constructor(public auth: AuthService, private router: Router) {
+    console.log('doeei');
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(`AddTokenInterceptor - ${request.url}`);
+    console.log(this.auth.getToken());
+
     if (this.auth.getToken()) {
-      request = request.clone({
+      const temp = request.clone({
         setHeaders: {
-         // 'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Headers': '*',
           Authorization: `Bearer ${this.auth.getToken()}`
         }
       });
-    }
-    return next.handle(request).pipe(catchError(error => {
+      return next.handle(temp).pipe(catchError(error => {
       // intercept the respons error and displace it to the console
       console.log(error);
       // return the error to the method that called it
       return throwError(error);
     }));
+    } else {
+      return next.handle(request);
+    }
   }
 }

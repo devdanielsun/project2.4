@@ -8,7 +8,7 @@ import * as mapboxgl from 'mapbox-gl';
 export class MapService {
 
   constructor() {
-    console.log(environment.mapbox.accessToken);
+    //console.log(environment.mapbox.accessToken);
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 }
