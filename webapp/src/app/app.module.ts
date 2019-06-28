@@ -31,10 +31,10 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     BrowserModule,
     RouteRoutingModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, MapService, GuardService, AuthService],
-  bootstrap: [AppComponent, ]
+  bootstrap: [AppComponent]
 })
 
 export class AppModule {
