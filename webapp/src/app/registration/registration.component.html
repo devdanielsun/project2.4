@@ -2,28 +2,28 @@
 
   <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" class=" text-center">
 
-      <p class="h4 mb-4">Sign up</p>
+    <p class="h4 mb-4">Sign up</p>
 
-      <div class="form-row mb-6">
-          <div class="col">
-              <input type="text" formControlName ="name" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-          </div>
-          <div class="col">
-              <input type="text" formControlName="lastName" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
-          </div>
+    <div class="form-row mb-6">
+      <div class="col">
+        <input type="text" formControlName ="name" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
       </div>
-      <div class="form-row mb-6">
-        <div class="col">
+      <div class="col">
+        <input type="text" formControlName="lastName" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+      </div>
+    </div>
+    <div class="form-row mb-6">
+      <div class="col">
         <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-        </div>
-        <div class="col">
-        <input type="password" formControlName="confirmPassword" class="form-control" placeholder="Confirm Password">
-        </div>
       </div>
-      <input type="email" formControlName="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+      <div class="col">
+        <input type="password" formControlName="confirmPassword" class="form-control" placeholder="Confirm Password">
+      </div>
+    </div>
+    <input type="email" formControlName="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
 
-      <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+    <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
 
-      <hr>
+    <hr>
   </form>
 </div>
