@@ -20,13 +20,12 @@ import { Router } from '@angular/router';
 export class Interceptor implements HttpInterceptor {
 
   constructor(public auth: AuthService, private router: Router) {
-    console.log('doeei');
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(this.auth.getToken());
 
     if (this.auth.getToken()) {
+      console.log('hij doet het');
       const temp = request.clone({
         setHeaders: {
           'Access-Control-Allow-Headers': '*',

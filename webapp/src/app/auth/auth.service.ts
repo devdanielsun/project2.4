@@ -10,7 +10,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
+  BackendCasper: '145.37.156.115:8080';
   AUTH_SERVER = 'http://localhost:5000/api';
+  //'http://localhost:5000/api';
   BACKEND_SERVER = '145.37.156.225:8080';
   authSubject = new BehaviorSubject(false);
   private token: string;
@@ -45,7 +47,7 @@ export class AuthService {
 
   register(regUser: RegUserI): Observable<JwtResponseI> {
     console.log(regUser);
-    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/register`, regUser).pipe(tap(
+    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/registration`, regUser).pipe(tap(
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
