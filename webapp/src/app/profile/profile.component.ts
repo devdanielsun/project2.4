@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
         this.service.getFriend(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
       )
     );
-
+      /*
     this.friends$ = this.route.paramMap.pipe(
       switchMap(params => {
         // (+) before `params.get()` turns the string into a number
@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
       switchMap(params => {
         return this.service.getSecret();
       })
-    );
+    );*/
   }
 
   addFriend() {

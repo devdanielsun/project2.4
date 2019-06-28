@@ -1,6 +1,6 @@
 import { ProfileI } from './profile';
 
-export const FRIENDS: ProfileI[] = [
+/*export const FRIENDS: ProfileI[] = [
   { id: 1, name: 'Daniël', lastname: 'Codeerts', email: 'info@codeerts.earth', profilepic: '../../assets/blue-marker.png' },
   { id: 11, name: 'Dr', lastname: 'Nice', email: 'info@holidayz.earth', profilepic: ''  },
   { id: 12, name: 'Narco', lastname: 'Lastname', email: 'info@holidayz.earth', profilepic: ''   },
@@ -12,4 +12,4 @@ export const FRIENDS: ProfileI[] = [
   { id: 18, name: 'Dr', lastname: 'IQ', email: 'info@holidayz.earth', profilepic: ''   },
   { id: 19, name: 'Magma', lastname: 'Lastname', email: 'info@holidayz.earth', profilepic: ''   },
   { id: 20, name: 'Tornado', lastname: 'Lastname', email: 'info@holidayz.earth', profilepic: ''   }
-];
+];*/

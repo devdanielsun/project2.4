@@ -2,8 +2,7 @@
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8">
-         <div class="well profile" *ngIf="showMSG$ | async as showMSG">
-            {{ showMSG.message }}
+         <div class="well profile">
             <div class="col-sm-12">
               <button type="button" class="btn btn-primary user-edit"><span class="fa fa-gear"></span> Verander profiel </button>
               <div class="row" *ngIf="user$ | async as user">
@@ -16,8 +15,8 @@
                   </ng-template>
                 </div>
                 <div class="col-sm-8">
-                  <h2>{{ user.name }} {{ user.lastname }}</h2>
-                  {{ user.email }}
+                  <h2>{{ user.message.name }} {{ user.message.lastname }}</h2>
+                  {{ user.message.email }}
                   <div class="row">
                     <div class="col-sm-4"><strong>Most visited country: </strong></div>
                     <div class="col-sm-8">{{ mostVisitedCountry }}</div>
@@ -58,8 +57,8 @@
                     </ng-template>
                   </div>
                   <div class="col-xs-5" style="font-size: 12pt">
-                    {{ friend.name}} {{ friend.lastname }} <br>
-                    <a style="font-size: 10pt" href="mailto:{{ friend.email }}">{{ friend.email }}</a> 
+                    {{ friend.message.name}} {{ friend.message.lastname }} <br>
+                    <a style="font-size: 10pt" href="mailto:{{ friend.email }}">{{ friend.message.email }}</a> 
                   </div>
                     <div class="col-xs-3"><strong>Unlocked: </strong><br>
                     {{ amountVisitedCountries }} countries</div>
