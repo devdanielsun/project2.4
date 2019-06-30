@@ -11,19 +11,33 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ProfileService {
-  BackendCasper: '145.37.156.115:8080';
+  BackendCasper: 'http://csprl.nl:8088';
   constructor(private httpClient: HttpClient) { }
+
+  getUser(id: string): Observable<ProfileI> {
+    return this.httpClient.get<ProfileI>(`${this.BackendCasper}/user/${id}`);
+  }
 
   getFriends(id: string): Observable<ProfileI[]> {
     // TODO: send the message _after_ fetching the heroes
-    const myFriends = this.httpClient.get<ProfileI[]>(`${this.BackendCasper}/user/id/friends`);
+    const myFriends = this.httpClient.get<ProfileI[]>(`${this.BackendCasper}/user/${id}/friends`);
     return myFriends;
   }
+
   getFriend(id: string) {
     return this.getFriends(id).pipe(
       // (+) before `id` turns the string into a number
       map((profiles: ProfileI[]) => profiles.find(user => user.id === +id))
     );
+  }
+
+  addFriend(id: string, fid: string): Observable<ProfileI> {
+    const friendProfile = this.getUser(fid);
+    return this.httpClient.post<ProfileI>(`${this.BackendCasper}/user/${id}/friends/${fid}`, friendProfile);
+  }
+
+  deleteFriend(id: string, fid: string): Observable<{}> {
+    return this.httpClient.delete(`${this.BackendCasper}/user/${id}/friends/${fid}`);
   }
 
   getSecret(): Observable<any> {

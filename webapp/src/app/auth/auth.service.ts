@@ -11,8 +11,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable()
 export class AuthService {
   BackendCasper = '145.37.156.115:8080';
-  AUTH_SERVER = 'http://145.37.156.115:8080'//'http://localhost:5000/api';
-  //'http://localhost:5000/api';
+  AUTH_SERVER = 'http://csprl.nl:8088'; // http://localhost:5000/api';
+  //'http:csprl.nl:8088';
   BACKEND_SERVER = '145.37.156.225:8080';
   authSubject = new BehaviorSubject(false);
   private token: string;
@@ -43,9 +43,10 @@ export class AuthService {
     ));
   }
   logout(): void {
-    this.token = '';
+    this.token = '';  
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ID');
+    localStorage.clear();
     this.loggedIn$.next(false);
   }
 
@@ -96,16 +97,17 @@ export class AuthService {
     const token = localStorage.getItem('ACCESS_TOKEN');
     // Check whether the token is expired and return
     // true or false
-    if (token) {
+    if (token && token != null) {
       if (this.isExpired(token)) {
-        this.logout();
         this.loggedIn$.next(false);
+        this.logout();
         return false;
       }
       this.loggedIn$.next(true);
       return true;
     } else {
       this.loggedIn$.next(false);
+      this.logout();
       return false;
     }
   }

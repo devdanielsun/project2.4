@@ -21,4 +21,8 @@ export class MenuComponent implements OnInit {
     this.isLoggedIn$ = this.auth.isLoggedIn;
     console.log(this.isLoggedIn$);
   }
+  logout() {
+    this.auth.logout();
+    this.hideMenu();
+  }
 }
