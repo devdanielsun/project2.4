@@ -46,7 +46,7 @@
             </div>
             <div class="col-xs-12 divider text-center">
               <h3><strong>Friends</strong></h3>          
-              <ul class="list-friends list-group">
+              <ul class="list-friends list-group" *ngIf="friends$">
                 <li *ngFor="let friend of friends$ | async" [routerLink]="['/profile', friend.id]" class="list-group-item">
                   <div class="col-xs-4 col-md-2">
                     <div *ngIf="friend.profilepic;else load_default_picture">

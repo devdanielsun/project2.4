@@ -12,15 +12,18 @@ import { Profile } from 'selenium-webdriver/firefox';
   providedIn: 'root',
 })
 export class ProfileService {
-  BackendCasper: 'http://csprl.nl:8088';
+  BackendCasper = 'http://csprl.nl:8088';
+
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
   getUser(id: string): Observable<ProfileI> {
-    return this.httpClient.get<ProfileI>(`${this.BackendCasper}/user/${id}`);
+    const myToken: any = this.authService.getToken();
+    const me = this.httpClient.get<ProfileI>(`${this.BackendCasper}/user/${id}`);
+    console.log(me);
+    return me;
   }
 
   getFriends(id: string): Observable<any> {
-    // TODO: send the message _after_ fetching the heroes
     const myToken: any = this.authService.getToken();
     const myFriends = this.httpClient.get<ProfileI[]>(`${this.BackendCasper}/user/${id}/friends`, myToken);
     return myFriends;
@@ -40,9 +43,5 @@ export class ProfileService {
 
   deleteFriend(id: string, fid: string): Observable<{}> {
     return this.httpClient.delete(`${this.BackendCasper}/user/${id}/friends/${fid}`);
-  }
-
-  getSecret(): Observable<any> {
-    return this.httpClient.get(`http://localhost:5000/api/secret`, {responseType: 'json'});
   }
 }
