@@ -1,3 +1,7 @@
+export interface MapI {
+  coordinates: number[];
+  // toDo add body to interface
+}
 export interface IGeometry {
     type: string;
     coordinates: number[];

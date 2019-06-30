@@ -1,10 +1,65 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 
+.pagecolor{
+  background-color: #94b7d3;
+  position: absolute;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+}
+
 .form-row {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 .jumbotron {
   background-color: #94b7d3;
+}
+
+.whitebox{
+  background-color: #ffffff;
+  -webkit-box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);
+  -moz-box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);
+  box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);
+  padding: 15px;
+}
+
+.regbtn{
+  font-size: 20px;
+  padding: 10px 10px;
+}
+.regform{
+  font-size: 18px;
+}
+
+.logintext{
+  font-weight: 500;
+  margin: 15px 0;
+}
+
+.alreadyaccount{
+  font-size: 14px;
+}
+
+
+@media only screen and (max-width: 768px) {
+  
+  .form-rowmobile{
+    display: block;
+  }
+
+  .forminput{
+    margin-bottom: 15px;
+  }
+  .firstinput{
+    margin-top: 15px;
+  }
+  .jumbotron{
+    margin-top: 15%;
+  }
 }
