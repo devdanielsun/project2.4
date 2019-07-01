@@ -23,6 +23,7 @@ export class MapBoxComponent implements OnInit {
   locations$: Observable<string>;
   private lat: any;
   private long: any;
+  private e: any;
 
   constructor(private route: ActivatedRoute, private mapService: MapService) { }
 
@@ -36,16 +37,6 @@ export class MapBoxComponent implements OnInit {
   }
 
   private initializeMap() {
-    /// locate the user
-    if (navigator.geolocation) {
-       navigator.geolocation.getCurrentPosition(position => {
-
-        console.log (position.coords.latitude, position.coords.longitude)
-        this.lat = position.coords.latitude;
-        this.long = position.coords.longitude;
-      });
-    }
-
     this.buildMap();
   }
 
@@ -87,6 +78,7 @@ export class MapBoxComponent implements OnInit {
 
         // set bbox as 5px reactangle area around clicked point
         const bbox = [[e.point.x - 3, e.point.y - 3], [e.point.x + 3, e.point.y + 3]];
+        console.log(bbox + 'deze')
         const features = this.map.queryRenderedFeatures(bbox, { layers: ['country-layer'] });
 
         for (const f of features) {
@@ -137,11 +129,23 @@ export class MapBoxComponent implements OnInit {
   getRandomBoolean(): boolean {
     return Math.random() >= 0.5;
   }
+  private getlocation() {
+    // locate the user
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+
+        console.log (position.coords.latitude, position.coords.longitude)
+        this.lat = position.coords.latitude;
+        this.long = position.coords.longitude;
+        this.addlocationpin();
+      });
+    }
+  }
 //  Mapbox buttons
   addlocationpin() {
-    if (this.long && this.lat && confirm('Do you want to share your current location?')) {
+    if (this.long && this.lat) {
     this.createNewPinpoint(this.map, this.long, this.lat);
-  } else {
+    } else {
     console.log('Your location has not been shared');
     }}
 }
