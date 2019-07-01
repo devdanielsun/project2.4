@@ -14,21 +14,7 @@ export interface MapI {
   country: string;
 }
 
-export interface MapResponce {
-  timestamp: number;
-  status: number;
-  error: string;
-  comment: string;
-  message: {
-    id: number;
-    private_level: number;
-    longitude: string;
-    latitude: string;
-    date_time: number;
-  };
- }
-
-export interface GetMapResponce {
+export interface DestinationsResponce {
   userId: number;
   tokenValid: boolean;
   newToken: string;

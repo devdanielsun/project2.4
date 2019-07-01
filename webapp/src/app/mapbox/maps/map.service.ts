@@ -3,7 +3,7 @@ import { ProfileService } from './../../profile/profile.service';
 import { Injectable } from '@angular/core';
 import { environment } from './environments/default';
 
-import { GeoJson, MapI, MapResponce, GetMapResponce } from './map';
+import { GeoJson, MapI, DestinationsResponce } from './map';
 import * as mapboxgl from 'mapbox-gl';
 import { Observable, Observer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -19,13 +19,13 @@ export class MapService {
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
-  getMap(id: string): Observable<GetMapResponce> {
-    return this.httpClient.get<GetMapResponce>(`${this.BackendCasper}/user/${id}/map`);
+  getMap(id: string): Observable<DestinationsResponce> {
+    return this.httpClient.get<DestinationsResponce>(`${this.BackendCasper}/user/${id}/map`);
   }
 
-  postMap(id: string, map: MapI): Observable<MapResponce> {
-    return this.httpClient.post<MapResponce>(`${this.BackendCasper}/user/${id}/map`, JSON.stringify(map)).pipe(tap(
-      (res: MapResponce) => {
+  postMap(id: string, map: MapI): Observable<DestinationsResponce> {
+    return this.httpClient.post<DestinationsResponce>(`${this.BackendCasper}/user/${id}/map`, JSON.stringify(map)).pipe(tap(
+      (res: DestinationsResponce) => {
         if (res) {
           console.log(res);
           console.log('Locations is uploaded');
