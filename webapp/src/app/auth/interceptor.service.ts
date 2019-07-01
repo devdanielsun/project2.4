@@ -31,7 +31,8 @@ export class Interceptor implements HttpInterceptor {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.auth.getToken()}`
+          'token': this.auth.getToken(),
+         // 'Authorization': `Bearer ${this.auth.getToken()}`
         }
       });
       return next.handle(temp).pipe(catchError(error => {

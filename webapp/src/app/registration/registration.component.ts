@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { RegUserI } from '../jwt/reg-user';
+import { PopupService } from '../popup/popup.service';
 
 
 @Component({
@@ -15,7 +15,8 @@ export class RegistrationComponent implements OnInit {
     userForm: FormGroup;
   submitted: any;
   f: any;
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router,
+              private popupService: PopupService) {
   }
 
     ngOnInit() {
@@ -31,19 +32,37 @@ export class RegistrationComponent implements OnInit {
     onSubmit(userData) {
       if (userData.password === userData.confirmPassword) {
 
-      if (this.userForm.valid) {
-        const rUser: RegUserI = {
-          name: userData.name,
-          lastname: userData.lastName,
-          email: userData.email,
-          password: userData.password,
-        };
-        this.authService.register(rUser).subscribe(res => {
+        if (this.userForm.valid) {
+          const rUser: RegUserI = {
+            name: userData.name,
+            lastname: userData.lastName,
+            email: userData.email,
+            password: userData.password,
+          };
+          this.authService.register(rUser).subscribe(res => {
+          if (res.newToken === null) {
+            console.log('hij komt hier ook hoor');
+            this.Popup('Error', 'danger', res.message);
+          } else {
+          this.Popup('Success!', 'success', 'Your registration was succesfull!');
           this.router.navigateByUrl('/map');
-        });
+        }},
+        (err) => {
+          console.log(err);
+          this.Popup('Error', 'danger', err.error.message);
+        }
+          );
       } else {
-        alert('User form is not valid!!');
+        this.Popup('Error', 'danger', 'Please use a longer password or use a valid email!');
       }
     }
+  }
+  Popup(title: string, type: string, msg: string) {
+    this.popupService.create(
+      title, // title
+      type, // type
+      3500, // time
+      msg // body
+      );
   }
 }

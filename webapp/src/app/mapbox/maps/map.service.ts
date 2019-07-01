@@ -10,7 +10,7 @@ import { MappingsContext } from 'source-list-map';
 @Injectable()
 export class MapService {
 
-  BackendCasper: 'http://csprl.nl:8088';
+  BackendCasper = 'http://csprl.nl:8088';
   constructor(private httpClient: HttpClient) {
     //console.log(environment.mapbox.accessToken);
     mapboxgl.accessToken = environment.mapbox.accessToken;

@@ -1,0 +1,15 @@
+<!-- The Modal -->
+<div id="myModal" class="fixed-bottom" *ngIf="modalStatus" >
+  <!-- Modal content -->
+  <div class="modal-content" [@dialog] >
+    <div class="header" [style.background-color]="backColor">
+        <h3>{{title}}</h3>
+    </div>
+    <div class="body">
+      <p>{{body}}</p>
+      <hr>
+    </div>
+
+  </div>
+  
+</div>
