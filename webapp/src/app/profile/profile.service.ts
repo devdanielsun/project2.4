@@ -41,8 +41,7 @@ export class ProfileService {
     );
   }
 
-  getFollowers() {
-  const id = localStorage.getItem('id');
+  getFollowers(id: string) {
   return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends}`).pipe(tap(
     (res: FriendResponce) => {
       if (res) {
