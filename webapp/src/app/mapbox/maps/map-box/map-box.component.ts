@@ -198,7 +198,7 @@ export class MapBoxComponent implements OnInit {
 //  Mapbox buttons
   addlocationpin() {
     if (this.long && this.lat) {
-    this.createNewPinpoint(this.map, this.long, this.lat);
+    this.createNewPinpoint(this.map,"No land", this.long, this.lat, new Date().getTime(), true);
     } else {
     console.log('Your location has not been shared');
     }}
