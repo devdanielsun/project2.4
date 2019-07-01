@@ -1,10 +1,14 @@
-  import { MapService } from './../map.service';
+
+import { ProfileService } from './../../../profile/profile.service';
+import { AuthService } from './../../../auth/auth.service';
+import { MapService } from './../map.service';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { GeoJson, FeatureCollection } from '../map';
+import { GeoJson, FeatureCollection, MapI, GetMapResponce } from '../map';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ProfileI } from 'src/app/profile/profile';
 
 
 @Component({
@@ -18,21 +22,38 @@ export class MapBoxComponent implements OnInit {
   map: mapboxgl.Map;
   style = 'mapbox://styles/danielgeerts/cjx0c0f3x06yt1cs3yfskhjhv';
 
-  private list: string[] = ['!in', 'NAME', 'Antarctica'];
+  private landList: string[] = ['!in', 'NAME', 'Antarctica'];
 
-  locations$: Observable<string>;
+
   private lat: any;
   private long: any;
-  private e: any;
 
-  constructor(private route: ActivatedRoute, private mapService: MapService) { }
+  locations: GetMapResponce;
+  user: ProfileI['message'];
+
+
+  constructor(private route: ActivatedRoute, private mapService: MapService, private auth: AuthService, private profile: ProfileService) { }
 
   ngOnInit() {
     this.initializeMap();
-    this.locations$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.mapService.getLocations(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
+    const uID: string = localStorage.getItem('ID');
+    /*this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+          return uID = params.get('id') ? params.get('id') : localStorage.getItem('ID');
+        }
       )
+    );*/
+
+    this.mapService.getMap(uID).subscribe(
+      (res) => this.locations = res,
+      (err) => console.log(err),
+      () => console.log('done!')
+    );
+
+    this.profile.getUser(localStorage.getItem('ID')).subscribe(
+      (res) => this.user = res.message,
+      (err) => console.log(err),
+      () => console.log('done!')
     );
   }
 
@@ -71,37 +92,70 @@ export class MapBoxComponent implements OnInit {
         filter: ['!in', 'NAME', 'Antarctica'],
       }, 'holiday_overlay');
 
+      for (const loc of this.locations.message) {
+        if (loc.country && !this.landList.includes(loc.country)) {
+          this.landList.push(loc.country);
+        }
+        this.createNewPinpoint(this.map, loc.country, loc.longitude, loc.latitude, loc.date_time, false);
+      }
+      console.log(this.landList);
+      this.map.setFilter('country-layer', this.landList);
 
       this.map.on('click', (e: any) => {
-        // Add new pinpoint to the map
-        this.createNewPinpoint(this.map, e.lngLat.lng, e.lngLat.lat);
-
         // set bbox as 5px reactangle area around clicked point
-        const bbox = [[e.point.x - 3, e.point.y - 3], [e.point.x + 3, e.point.y + 3]];
-        console.log(bbox + 'deze')
+
+        const bbox = [[e.point.x - 1, e.point.y - 1], [e.point.x + 1, e.point.y + 1]];
+
         const features = this.map.queryRenderedFeatures(bbox, { layers: ['country-layer'] });
+
+        // Add new pinpoint to the map
+        this.createNewPinpoint(this.map, features[0].properties.NAME, e.lngLat.lng, e.lngLat.lat, null, true);
 
         for (const f of features) {
           console.log('clickedOn: ' + f.properties.NAME);
-          if (!this.list.includes(f.properties.NAME)) {
-            this.list.push(f.properties.NAME);
+          if (!this.landList.includes(f.properties.NAME)) {
+            this.landList.push(f.properties.NAME);
           }
         }
-        this.map.setFilter('country-layer', this.list);
+        this.map.setFilter('country-layer', this.landList);
       });
     });
   }
 
-  createNewPinpoint(map: any, lng: number, lat: number) {
-    console.log("Create new marker on -> " + 'pinpoint' + lng + lat);
-// tslint:disable-next-line: only-arrow-functions
+  createNewPinpoint(map: any, landName: any, lng: string, lat: string, date: number, addToDB: boolean) {
     let randomIMG = '../../../../assets/';
 
     randomIMG += this.getRandomBoolean() ? 'blue-marker.png' : 'red-marker.png';
 
+    const date_ms = date ? date : new Date().getTime();
+    const newPoint: MapI = {
+      user: {
+        id: this.user.id,
+        name: this.user.name,
+        lastname: this.user.lastname,
+        email: this.user.email,
+        admin: this.user.admin,
+      },
+      longitude: lng,
+      latitude: lat,
+      date_time: date_ms,
+      country: landName ? landName : 'No land',
+    };
+
+    if (addToDB === true) {
+      console.log(newPoint)
+      this.mapService.postMap(localStorage.getItem('ID'), newPoint).subscribe(
+        (res) => console.log(res),
+        (err) => console.log(err),
+        () => console.log('Destination added to DB!')
+      );
+    }
+
+    const pinname = 'pinpoint_' + this.user.id + '_' + date_ms;
+    console.log("Create new marker on -> " + pinname);
     map.loadImage(randomIMG, function(error, image) {
       if (error) { throw error; }
-      map.addImage('pinpoint' + lng + lat, image);
+      map.addImage(pinname, image);
       map.addLayer({
         id: 'point' + lng + lat,
         type: 'symbol',
@@ -119,7 +173,7 @@ export class MapBoxComponent implements OnInit {
           }
         },
         layout: {
-          'icon-image': 'pinpoint' + lng + lat,
+          'icon-image': pinname,
           'icon-size': 0.75,
         }
       });

@@ -1,10 +1,50 @@
+import { UserI } from './../../jwt/user';
+import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 export interface MapI {
- // coordinates: number[];
-  lat: string;
-  lng: string;
-  id: string;
+  user: {
+    id: number;
+    name: string;
+    lastname: string;
+    email: string;
+    admin: boolean;
+  };
+  longitude: string;
+  latitude: string;
+  date_time: number;
   country: string;
 }
+
+export interface MapResponce {
+  timestamp: number;
+  status: number;
+  error: string;
+  comment: string;
+  message: {
+    id: number;
+    private_level: number;
+    longitude: string;
+    latitude: string;
+    date_time: number;
+  };
+ }
+
+export interface GetMapResponce {
+  userId: number;
+  tokenValid: boolean;
+  newToken: string;
+  admin: boolean;
+  message: [
+    {
+      id: number;
+      private_level: number;
+      longitude: string;
+      latitude: string;
+      date_time: number;
+      country: string;
+    }
+  ];
+}
+
 export interface IGeometry {
     type: string;
     coordinates: number[];
