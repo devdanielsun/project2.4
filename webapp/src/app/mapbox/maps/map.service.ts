@@ -16,11 +16,10 @@ export class MapService {
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
-  /* need to create a body in MapI located in  map.ts
-  getMap(id: string): Observable<{MapI}> {
-    return this.httpClient.get<MapI>(`${this.BackendCasper}/user/${id}/map`);
+  // need to create a body in MapI located in  map.ts
+  getMap(id: string): Observable<MapI[]> {
+    return this.httpClient.get<MapI[]>(`${this.BackendCasper}/user/${id}/map`);
   }
-  */
 
   postMap(id: string, map: MapI) {
     this.httpClient.post<MapI>(`${this.BackendCasper}/user/${id}/map`, map);

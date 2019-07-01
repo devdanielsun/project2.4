@@ -43,7 +43,7 @@ export class AuthService {
     ));
   }
   logout(): void {
-    this.token = '';  
+    this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ID');
     localStorage.clear();

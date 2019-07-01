@@ -1,6 +1,9 @@
 export interface MapI {
-  coordinates: number[];
-  // toDo add body to interface
+ // coordinates: number[];
+  lat: string;
+  lng: string;
+  id: string;
+  country: string;
 }
 export interface IGeometry {
     type: string;
