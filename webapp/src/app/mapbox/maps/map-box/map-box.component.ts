@@ -1,4 +1,4 @@
-import { MapService } from './../map.service';
+  import { MapService } from './../map.service';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { GeoJson, FeatureCollection } from '../map';
@@ -21,6 +21,8 @@ export class MapBoxComponent implements OnInit {
   private list: string[] = ['!in', 'NAME', 'Antarctica'];
 
   locations$: Observable<string>;
+  private lat: any;
+  private long: any;
 
   constructor(private route: ActivatedRoute, private mapService: MapService) { }
 
@@ -37,7 +39,10 @@ export class MapBoxComponent implements OnInit {
     /// locate the user
     if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(position => {
-        console.log (position.coords.latitude, position.coords.longitude);
+
+        console.log (position.coords.latitude, position.coords.longitude)
+        this.lat = position.coords.latitude;
+        this.long = position.coords.longitude;
       });
     }
 
@@ -132,4 +137,11 @@ export class MapBoxComponent implements OnInit {
   getRandomBoolean(): boolean {
     return Math.random() >= 0.5;
   }
+//  Mapbox buttons
+  addlocationpin() {
+    if (this.long && this.lat && confirm('Do you want to share your current location?')) {
+    this.createNewPinpoint(this.map, this.long, this.lat);
+  } else {
+    console.log('Your location has not been shared');
+    }}
 }
