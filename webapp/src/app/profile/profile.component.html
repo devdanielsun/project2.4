@@ -5,18 +5,34 @@
          <div class="well profile">
             <div class="col-sm-12">
               <button type="button" class="btn btn-primary user-edit"><span class="fa fa-gear"></span> Verander profiel </button>
-              <div class="row" *ngIf="user$ | async as user">
+              <div class="row">
                 <div class="col-sm-4">
-                <div *ngIf="user.profilepic;else load_default_picture">
-                    <img class="user-img img-circle img-responsive" src="{{ user.profilepic }}" alt="{{ user.name }} {{ user.lastname }}" />
+                <div *ngIf="user$.profilepic;else load_default_picture">
+                    <img class="user-img img-circle img-responsive" src="{{ user.profilepic }}"/>
                   </div>
                   <ng-template #load_default_picture>
-                    <img class="user-img img-circle img-responsive" src="../../assets/default-user.jpg" alt="{{ user.name }} {{ user.lastname }}" />
+                    <img class="user-img img-circle img-responsive" src="../../assets/default-user.jpg" />
                   </ng-template>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-8" *ngIf="user$ | async as user">
                   <h2>{{ user.message.name }} {{ user.message.lastname }}</h2>
                   {{ user.message.email }}
+                  <div class="row">
+                    <div class="col-sm-4"><strong>Most visited country: </strong></div>
+                    <div class="col-sm-8">{{ mostVisitedCountry }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4"><strong>Unlocked: </strong></div>
+                    <div class="col-sm-8">{{ amountVisitedCountries }} countries</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4"><strong>Traveled: </strong></div>
+                    <div class="col-sm-8">{{ amountTravels }} times</div>
+                  </div>
+                </div>
+                <div class="col-sm-8" *ngIf="!(user$ | async)">
+                  <h2>name lastname</h2>
+                  email
                   <div class="row">
                     <div class="col-sm-4"><strong>Most visited country: </strong></div>
                     <div class="col-sm-8">{{ mostVisitedCountry }}</div>
@@ -33,9 +49,10 @@
               </div>
             </div>            
             <div class="col-xs-12 divider text-center">
-                <div class="col-xs-12 col-sm-6 emphasis active" *ngIf="friends$ | async as friends">
-                    <h2><strong> {{ friends.length }} </strong></h2>                    
-                    <p><small>Friends</small></p>
+                <div class="col-xs-12 col-sm-6 emphasis active">
+                    <h2 *ngIf="friends$ | async"><strong> {{ followers.length + following.length }} </strong></h2>    
+                    <h2 *ngIf="!(friends$ | async)"><strong> 0 </strong></h2>
+                    <p><small>Full-duplex followers</small></p>
                     <button class="btn btn-success btn-block" (click)="addFriend()"><span class="fa fa-plus-circle"></span> Add/remove Friend </button>
                 </div>
                 <div class="col-xs-12 col-sm-6 emphasis">
@@ -44,10 +61,35 @@
                     <button class="btn btn-info btn-block" (click)="showMap()"><span class="fa fa-map-signs"></span> Show travels </button>
                 </div>
             </div>
-            <div class="col-xs-12 divider text-center">
-              <h3><strong>Friends</strong></h3>          
+            <div class="col-xs-6 divider text-center">
+              <h3><strong>Following</strong></h3>          
               <ul class="list-friends list-group" *ngIf="friends$">
-                <li *ngFor="let friend of friends$ | async" [routerLink]="['/profile', friend.id]" class="list-group-item">
+                <li *ngFor="let friend of followers.message | async" [routerLink]="['/profile', friend.id]" class="list-group-item">
+                  <div class="col-xs-4 col-md-2">
+                    <div *ngIf="friend.profilepic;else load_default_picture">
+                      <img class="friend-img img-circle img-responsive" src="{{ friend.profilepic }}" alt="{{ friend.name }} {{ friend.lastname }}" />
+                    </div>
+                    <ng-template #load_default_picture>
+                      <img class="friend-img img-circle img-responsive" src="../../assets/default-user.jpg" alt="{{ friend.name }} {{ friend.lastname }}" />
+                    </ng-template>
+                  </div>
+                  <div class="col-xs-5 col-xs-8" style="font-size: 12pt">
+                    {{ friend.message.name}} {{ friend.message.lastname }} <br>
+                    <a style="font-size: 10pt" href="mailto:{{ friend.message.email }}">{{ friend.message.email }}</a> 
+                  </div>
+                  <div class="visible-xs clearfix"></div>
+                  <div class="spacer visible-xs"></div>
+                    <div class="col-xs-6 col-md-3"><strong>Unlocked: </strong><br>
+                    {{ amountVisitedCountries }} countries</div>
+                    <div class="col-xs-6 col-md-2"><strong>Traveled: </strong><br>
+                    {{ amountTravels }} times</div>
+                </li>
+              </ul>
+            </div>
+            <div class="col-xs-6 divider text-center">
+              <h3><strong>Followers</strong></h3>          
+              <ul class="list-friends list-group" *ngIf="friends$">
+                <li *ngFor="let friend of followers.message | async" [routerLink]="['/profile', friend.id]" class="list-group-item">
                   <div class="col-xs-4 col-md-2">
                     <div *ngIf="friend.profilepic;else load_default_picture">
                       <img class="friend-img img-circle img-responsive" src="{{ friend.profilepic }}" alt="{{ friend.name }} {{ friend.lastname }}" />

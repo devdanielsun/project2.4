@@ -36,7 +36,10 @@ export class MapBoxComponent implements OnInit {
         this.user = res.message;
         this.buildMap();
       } ,
-      (err) => console.log(err)
+      (err) => {
+        console.log(err);
+        this.buildMap();
+      }
     );
   }
 

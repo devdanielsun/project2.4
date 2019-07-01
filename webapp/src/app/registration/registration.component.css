@@ -1,24 +1,24 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 
-.pagecolor{
-  background-color: #94b7d3;
+.upperlayer {
+  width: 100%;
+  max-width: 100%;
+  background: url('../../assets/background-1.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   position: absolute;
   top: 0;
-  bottom: auto;
+  bottom: 0;
   left: 0;
   right: 0;
-  background-size: cover;
-  height: 100%;
-  overflow: hidden;
 }
 
 .form-row {
   margin-top: 10px;
   margin-bottom: 10px;
-}
-.jumbotron {
-  background-color: #94b7d3;
 }
 
 .whitebox{

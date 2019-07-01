@@ -11,3 +11,14 @@ export interface ProfileI {
     };
     admin: boolean;
 }
+
+export interface FriendResponce {
+    userId: number;
+    tokenValid: boolean;
+    newToken: string;
+    admin: boolean;
+    message: [
+      {
+      }
+    ];
+  }

@@ -7,9 +7,10 @@
 }
 
 .bgblock {
-    background-color: rgba(255, 255, 255, 0.8);
-    margin: 50px 0px;
+    margin: 0px 0px;
     padding: 50px;
+    color: white;
+    z-index: 50;
 }
 @media only screen and (max-width: 768px) {
   .bgblock .row{
@@ -25,4 +26,72 @@
   .markerstext{
     font-size: 20px;
   }
+}
+
+.earth {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  margin: 3em auto;
+  background: #888 url('../../assets/earthmap.jpg') 0 0 repeat;
+  background-size: auto;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background-size: 1560px; /* 630*/
+  animation: rotate 10s linear infinite;
+  -webkit-animation: rotate 10s linear infinite;
+  -moz-animation: rotate 10s linear infinite;
+  -ms-animation: rotate 10s linear infinite;
+  -o-animation: rotate 10s linear infinite;
+  -webkit-transition: -webkit-transform 10s linear;
+  -webkit-transform-style: preserve-3d;
+  -moz-transition: -moz-transform 10s linear;
+  -moz-transform-style: preserve-3d;
+  transition: transform 10s linear;
+  transform-style: preserve-3d;
+  box-shadow: inset 20px 0 80px 6px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: inset 20px 0 80px 6px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: inset 20px 0 80px 6px rgba(0, 0, 0, 0.7);
+}
+
+.earth:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+  background: radial-gradient(circle at 100px 100px, #fff, rgba(0, 0, 0, 0.7));
+}
+
+.earth:before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: -80px 15px 80px 10px rgba(0,0,0,.7) inset;
+  -moz-box-shadow: -80px 15px 80px 10px rgba(0,0,0,.7) inset;
+  -webkit-box-shadow: -80px 15px 80px 10px rgba(0,0,0,.7) inset;
+  z-index: 2;
+}
+
+@keyframes rotate {
+  0% {background-position: 0 0;}
+  100% {background-position: 1560px 0;}
 }

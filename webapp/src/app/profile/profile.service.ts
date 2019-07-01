@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { ProfileI } from './profile';
+import { ProfileI, FriendResponce } from './profile';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -19,7 +19,6 @@ export class ProfileService {
     const me = this.httpClient.get<ProfileI>(`${this.BackendCasper}/user/${id}`).pipe(tap(
       (res: ProfileI) => {
         if (res && res.userId === res.message.id) {
-          console.log('Save user now!!!!');
           this.saveUser(res.message);
         }
       },
@@ -41,6 +40,21 @@ export class ProfileService {
       map((profiles: ProfileI[]) => profiles.find(user => user.message.id === +id))
     );
   }
+
+  getFollowers() {
+  const id = localStorage.getItem('id');
+  return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends}`).pipe(tap(
+    (res: FriendResponce) => {
+      if (res) {
+        console.log(res);
+      }
+    },
+    (err) => {
+      console.log(err);
+    }
+  ));
+  }
+  
 
   addFriend(id: string, fid: string): Observable<ProfileI> {
     const friendProfile = this.getUser(fid);
