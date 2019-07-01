@@ -1,0 +1,14 @@
+
+.bash_profile
+.DS_Store
+*.json
+*.md
+*.ts
+*.template
+*.js
+*.patch
+*.txt
+*.jst
+*.yml
+/node_modules
+package.json

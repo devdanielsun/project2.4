@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="Memory">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>api.User</class>
+        <class>api.Game</class>
+        <class>api.Topscore</class>
+        <properties>
+            <!-- The JDBC driver of your database -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+
+            <!-- PostgreSQL JDBC driver example -->
+            <!--
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            -->
+
+            <!-- The JDBC URL to the database instance -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/memory" />
+
+            <!-- PostgreSQL JDBC connection url example -->
+            <!--
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.172.60.91:5432/jpatest" />
+            -->
+
+            <!-- The database username -->
+            <!-- VERVANG DEZE WAARDEN MET DE GELDENDE WAARDEN OP JE EIGEN SYSTEEM -->
+            <property name="javax.persistence.jdbc.user" value="memory_api" />
+
+            <!-- The database password -->
+            <!-- VERVANG DEZE WAARDEN MET DE GELDENDE WAARDEN OP JE EIGEN SYSTEEM -->
+            <property name="javax.persistence.jdbc.password" value="Zo3t3Aardapp3l" />
+
+            <property name="hibernate.connection.charSet" value="UTF-8" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+
+        </properties>
+    </persistence-unit>
+</persistence>

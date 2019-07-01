@@ -16,7 +16,8 @@
   },
   "homepage": "https://github.com/danielgeerts7/project2.4#readme",
   "dependencies": {
-    "@angular/cli": "^7.3.9"
+    "@angular/cli": "^7.3.9",
+    "express": "^4.17.1"
   },
   "description": ""
 }
