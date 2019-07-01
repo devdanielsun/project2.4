@@ -38,13 +38,13 @@ export class ProfileComponent implements OnInit {
         this.service.getUser(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
       )
     );
-
+    /*
     this.service.getFollowers().subscribe(
       (res) => {
         this.followers = res;
       },
       (err) => console.log(err)
-    );
+    );*/
   }
 
   addFriend() {
