@@ -1,5 +1,5 @@
 export interface JwtResponseI {
-    userId: number;
+    userId: string;
     tokenValid: boolean;
     newToken: string;
     message: string;

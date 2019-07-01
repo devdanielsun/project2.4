@@ -7,8 +7,6 @@ export interface ProfileI {
         name: string;
         lastname: string;
         email: string;
-        locations: any[];
-        friends: any[];
         admin: boolean
     };
     admin: boolean;

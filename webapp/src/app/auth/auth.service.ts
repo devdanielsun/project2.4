@@ -1,9 +1,10 @@
+import { ProfileService } from './../profile/profile.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegUserI } from '../jwt/reg-user';
 import { UserI } from '../jwt/user';
 import { JwtResponseI } from '../jwt/jwt-response';
-import { tap } from 'rxjs/operators';
+import { tap, reduce } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -28,7 +29,6 @@ export class AuthService {
   }
 
   login(user: UserI): Observable<JwtResponseI> {
-    console.log(JSON.stringify(user));
     return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/login`, JSON.stringify(user)).pipe(tap(
       (res: JwtResponseI) => {
         if (res) {
@@ -46,6 +46,7 @@ export class AuthService {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ID');
+    localStorage.removeItem('ME');
     localStorage.clear();
     this.loggedIn$.next(false);
   }
@@ -66,11 +67,12 @@ export class AuthService {
     ));
   }
 
-  private saveToken(token: string, id: number): void {
+  private saveToken(token: string, id: string): void {
     localStorage.setItem('ACCESS_TOKEN', token),
     localStorage.setItem('ID', id.toString());
     this.token = token;
   }
+
   public getToken(): string {
     if (!this.token) {
       this.token = localStorage.getItem('ACCESS_TOKEN');
