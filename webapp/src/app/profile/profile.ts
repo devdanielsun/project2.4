@@ -17,8 +17,20 @@ export interface FriendResponce {
     tokenValid: boolean;
     newToken: string;
     admin: boolean;
-    message: [
-      {
-      }
-    ];
+    message: {
+        followers: [{
+          id: number;
+          name: string;
+          lastname: string;
+          email: string;
+          admin: boolean
+        }],
+        following: [{
+          id: number;
+          name: string;
+          lastname: string;
+          email: string;
+          admin: boolean
+        }]
+      };
   }

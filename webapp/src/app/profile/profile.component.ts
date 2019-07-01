@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
         this.service.getUser(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
       )
     );
-      /*
+
     this.user$.subscribe(
       (result) => {
         this.service.getFollowers(result.userId.toString()).subscribe(
@@ -48,7 +48,6 @@ export class ProfileComponent implements OnInit {
         );
       },
     );
-      */
   }
 
   addFriend() {
