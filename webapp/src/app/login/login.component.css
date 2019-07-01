@@ -25,23 +25,6 @@
   right: 0;
 }
 
-.title{
-  text-align: center;
-    font-weight: normal;
-    color: #db871a;
-    text-transform: uppercase;
-    font-size: 8em;
-    white-space: nowrap;
-    font-size: 10vw;
-    z-index: 1000;
-    font-family: 'Bangers', cursive;
-    text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.7);
-    @include skew(0, -6.7deg, false);
-    @include transition-property(font-size);
-    @include transition-duration(0.5s);
-
-}
-
 .whitebox{
   background-color: #ffffff;
   -webkit-box-shadow: 3px 4px 14px -1px rgba(0,0,0,0.77);

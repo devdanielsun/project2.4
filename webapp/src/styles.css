@@ -10,9 +10,8 @@ body {
   text-align: center;
 }
 
-.fullpage {
+.app-root {
   background-color: lavender;
-  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
