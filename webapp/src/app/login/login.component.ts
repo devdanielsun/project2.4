@@ -1,11 +1,9 @@
-import { AuthModule } from './../auth/auth.module';
 import { Component, OnInit} from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { UserI } from '../jwt/user';
+import { PopupService } from '../popup/popup.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +15,8 @@ export class LoginComponent implements OnInit {
   submitted: any;
   f: any;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService,
+              private router: Router, private popupService: PopupService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -34,12 +33,31 @@ export class LoginComponent implements OnInit {
           email: userData.email,
           password: userData.password,
         };
-        this.authService.login(u).subscribe(res => {
+        this.authService.login(u).subscribe((res) => {
+          if (res.newToken === null) {
+            console.log('hij komt hier ook hoor');
+            this.Popup('Error', 'danger', res.message);
+          } else {
+          const title = 'Success';
+          this.Popup('Success!', 'success', 'Your logging was succesfull!');
           this.router.navigateByUrl('/map');
-        });
-      } else {
+        }},
+        (err) => {
+          console.log(err);
+          this.Popup('Error', 'danger', err.error.message);
+        }
+          );
+        } else {
         alert('User form is not valid!!');
       }
+  }
+  Popup(title: string, type: string, msg: string) {
+    this.popupService.create(
+      title, // title
+      type, // type
+      3500, // time
+      msg // body
+      );
   }
 
   getUrl() {

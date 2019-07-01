@@ -81,6 +81,9 @@ export class AuthService {
   }
 
   public isExpired(token) {
+    if (!token && token === null) {
+      return true;
+    }
     const helper = new JwtHelperService();
     const decoded = helper.decodeToken(token);
     if (decoded.exp === undefined) {

@@ -1,3 +1,4 @@
+import { PopupService } from './../popup/popup.service';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 export class MenuComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private popupService: PopupService) {
   }
   @Output() closeEvent: EventEmitter<string> = new EventEmitter();
   hideMenu() {
@@ -24,5 +25,14 @@ export class MenuComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.hideMenu();
+    this.Popup('Logged out!', 'danger', 'You are no longer logged in!');
+  }
+  Popup(title: string, type: string, msg: string) {
+    this.popupService.create(
+      title, // title
+      type, // type
+      3500, // time
+      msg // body
+      );
   }
 }
