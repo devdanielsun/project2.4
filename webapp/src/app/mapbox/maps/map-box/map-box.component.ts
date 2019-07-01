@@ -1,3 +1,4 @@
+
 import { ProfileService } from './../../../profile/profile.service';
 import { AuthService } from './../../../auth/auth.service';
 import { MapService } from './../map.service';
@@ -23,9 +24,14 @@ export class MapBoxComponent implements OnInit {
 
   private landList: string[] = ['!in', 'NAME', 'Antarctica'];
 
+
+  private lat: any;
+  private long: any;
+
   locations: DestinationsResponce;
   user: ProfileI['message'];
   uid: string;
+
 
   constructor(private route: ActivatedRoute, private mapService: MapService, private auth: AuthService, private profile: ProfileService) { }
 
@@ -96,7 +102,9 @@ export class MapBoxComponent implements OnInit {
 
       this.map.on('click', (e: any) => {
         // set bbox as 5px reactangle area around clicked point
+
         const bbox = [[e.point.x - 1, e.point.y - 1], [e.point.x + 1, e.point.y + 1]];
+
         const features = this.map.queryRenderedFeatures(bbox, { layers: ['country-layer'] });
 
         const name = features[0] ? features[0].properties.NAME : 'No land';
@@ -167,4 +175,23 @@ export class MapBoxComponent implements OnInit {
   getRandomBoolean(): boolean {
     return Math.random() >= 0.5;
   }
+  getlocation() {
+    // locate the user
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+
+        console.log (position.coords.latitude, position.coords.longitude)
+        this.lat = position.coords.latitude;
+        this.long = position.coords.longitude;
+        this.addlocationpin();
+      });
+    }
+  }
+//  Mapbox buttons
+  addlocationpin() {
+    if (this.long && this.lat) {
+    this.createNewPinpoint(this.map, 'No land', this.long, this.lat, new Date().getTime(), true);
+    } else {
+    console.log('Your location has not been shared');
+    }}
 }
