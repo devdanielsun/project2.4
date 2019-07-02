@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.popupService.create(
       title, // title
       type, // type
-      3500, // time
+      99999999999999, // time
       msg // body
       );
   }
