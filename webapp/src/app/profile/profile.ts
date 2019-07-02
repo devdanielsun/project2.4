@@ -7,7 +7,7 @@ export interface ProfileI {
         name: string;
         lastname: string;
         email: string;
-        admin: boolean
+        admin: boolean;
     };
     admin: boolean;
 }
@@ -16,21 +16,21 @@ export interface FriendResponce {
     userId: number;
     tokenValid: boolean;
     newToken: string;
-    admin: boolean;
     message: {
-        followers: [{
-          id: number;
-          name: string;
-          lastname: string;
-          email: string;
-          admin: boolean
-        }],
-        following: [{
-          id: number;
-          name: string;
-          lastname: string;
-          email: string;
-          admin: boolean
-        }]
-      };
+      followers: [{
+        id: number;
+        name: string;
+        lastname: string;
+        email: string;
+        admin: boolean;
+      }],
+      following: [{
+        id: number;
+        name: string;
+        lastname: string;
+        email: string;
+        admin: boolean;
+      }]
+    };
+    admin: boolean;
   }
