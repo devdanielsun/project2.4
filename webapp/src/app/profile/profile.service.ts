@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { ProfileI, FriendResponce } from './profile';
+import { ProfileI, FriendResponce, addfriend } from './profile';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -29,38 +29,41 @@ export class ProfileService {
     return me;
   }
 
-  getFriends(id: string): Observable<any> {
-    const myFriends = this.httpClient.get<ProfileI[]>(`${this.BackendCasper}/user/${id}/friends`);
-    return myFriends;
-  }
-
-  getFriend(id: string) {
-    return this.getFriends(id).pipe(
-      // (+) before `id` turns the string into a number
-      map((profiles: ProfileI[]) => profiles.find(user => user.message.id === +id))
-    );
-  }
-
   getFollowers(id: string) {
-  return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends`).pipe(tap(
-    (res: FriendResponce) => {
-      if (res) {
-        return res;
+    return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends`).pipe(tap(
+      (res: FriendResponce) => {
+        if (res) {
+          return res;
+        }
+      },
+      (err) => {
+        console.log(err);
       }
-    },
-    (err) => {
-      console.log(err);
-    }
-  ));
+    ));
   }
 
-  addFriend(id: string, fid: string): Observable<ProfileI> {
-    const friendProfile = this.getUser(fid);
-    return this.httpClient.post<ProfileI>(`${this.BackendCasper}/user/${id}/friends/${fid}`, friendProfile);
+  addFriend(id: string, fid: string): Observable<addfriend> {
+    return this.httpClient.post<addfriend>(`${this.BackendCasper}/user/${id}/friends/${fid}`, '').pipe(tap(
+      (res: addfriend) => {
+        console.log(res);
+        return res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    ));
   }
 
-  deleteFriend(id: string, fid: string): Observable<{}> {
-    return this.httpClient.delete(`${this.BackendCasper}/user/${id}/friends/${fid}`);
+  deleteFriend(id: string, fid: string): Observable<any> {
+    return this.httpClient.delete(`${this.BackendCasper}/user/${id}/friends/${fid}`).pipe(tap(
+      (res) => {
+        console.log(res);
+        return res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    ));
   }
 
   private saveUser(user: ProfileI['message']) {

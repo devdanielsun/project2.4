@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ProfileI, FriendResponce } from './profile';
 import { identifierModuleUrl } from '@angular/compiler';
+import { PopupService } from '../popup/popup.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,10 +25,12 @@ export class ProfileComponent implements OnInit {
   user: ProfileI;
   followers: FriendResponce;
 
+  isMe = true;
+  alreadyFollowing = false;
 
   showMSG$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private service: ProfileService, private router: Router) {
+  constructor(private route: ActivatedRoute, private service: ProfileService, private router: Router, private popupService: PopupService) {
     this.mostVisitedCountry = 'Netherlands';
     this.amountVisitedCountries = -1;
     this.amountTravels = -1;
@@ -42,6 +45,11 @@ export class ProfileComponent implements OnInit {
   }
 
   doCallBack(id: string): string {
+    if (id === localStorage.getItem('ID')) {
+      this.isMe = true;
+    } else {
+      this.isMe = false;
+    }
     this.service.getUser(id).subscribe(
       (res) => {
         this.user = res;
@@ -59,14 +67,21 @@ export class ProfileComponent implements OnInit {
       (res) => {
         console.log(res);
         this.followers = res;
-        if (this.followers && this.followers.message.followers &&  this.followers.message.following) {
+        if (this.followers && this.followers.message.followers && this.followers.message.following) {
           this.dupplexfollowers = 0;
-          this.followers.message.followers.forEach(ing => {
-            this.followers.message.following.forEach(ers => {
+          this.followers.message.followers.forEach(ers => {
+            this.followers.message.following.forEach(ing => {
               if (ing.id === ers.id) {
                 this.dupplexfollowers += 1;
               }
             });
+          });
+          this.alreadyFollowing = false;
+          this.followers.message.followers.forEach( ers => {
+            console.log(ers.id.toString() + ' ' + localStorage.getItem('ID'));
+            if (ers.id.toString() === localStorage.getItem('ID')) {
+              this.alreadyFollowing = true;
+            }
           });
         }
       },
@@ -81,11 +96,61 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl(`/profile/${id}`);
   }
 
-  addFriend() {
-    alert ('No you cant');
+  addFriend(fid: string) {
+    this.service.addFriend(localStorage.getItem('ID'), fid).subscribe(
+      (res) => {
+        this.service.getUser(res.message.u2).subscribe(
+          (result) => {
+            console.log(res);
+            this.popupService.create(
+              'Following ' + result.message.name + ' ' + result.message.lastname, // title
+              'success', // type
+              3500, // time
+              'Succesfully following ' + result.message.name + ' ' + result.message.lastname // body
+            );
+            this.getFriends(fid);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+        this.popupService.create(
+          'Something went wrong ' + err.message, // title
+          'danger', // type
+          3500, // time
+          'Something went wrong ' + err.message, // body
+        );
+      }
+    );
+  }
+
+  removeFriend(fid: string) {
+    this.service.deleteFriend(localStorage.getItem('ID'), fid).subscribe(
+      (res) => {
+        this.popupService.create(
+          'Unfollowing', // title
+          'success', // type
+          3500, // time
+          'Succesfully unfollowed' // body
+        );
+        this.getFriends(fid);
+      },
+      (err) => {
+        console.log(err);
+        this.popupService.create(
+          'Something went wrong ' + err.message, // title
+          'danger', // type
+          3500, // time
+          'Something went wrong ' + err.message, // body
+        );
+      }
+    );
   }
 
   showMap() {
-    alert ('Go to map');
+    this.router.navigateByUrl(`/map`);
   }
 }

@@ -34,3 +34,15 @@ export interface FriendResponce {
     };
     admin: boolean;
   }
+
+export interface addfriend {
+    userId: number;
+    tokenValid: boolean;
+    newToken: string;
+    message: {
+        id: number;
+        u1: string;
+        u2: string;
+    };
+    admin: boolean;
+}
