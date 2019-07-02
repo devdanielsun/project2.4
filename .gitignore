@@ -6,7 +6,6 @@
 *.ts
 *.template
 *.js
-*.patch
 *.txt
 *.jst
 *.yml
