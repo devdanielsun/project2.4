@@ -1,9 +1,10 @@
 import { ProfileService } from './profile.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ProfileI, FriendResponce } from './profile';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,38 +19,66 @@ export class ProfileComponent implements OnInit {
   mostVisitedCountry: string;
   amountVisitedCountries: number;
   amountTravels: number;
+  dupplexfollowers: number;
 
-  selectedId: number;
+  user: ProfileI;
   followers: FriendResponce;
 
-  user$: Observable<ProfileI>;
 
   showMSG$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private service: ProfileService) {
+  constructor(private route: ActivatedRoute, private service: ProfileService, private router: Router) {
     this.mostVisitedCountry = 'Netherlands';
     this.amountVisitedCountries = -1;
     this.amountTravels = -1;
+    this.dupplexfollowers = 0;
   }
 
   ngOnInit() {
-    this.user$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.service.getUser(params.get('id') ? params.get('id') : localStorage.getItem('ID'))
-      )
+    console.log('load profile');
+    this.route.params.subscribe( params =>
+      params['id'] ? this.doCallBack(params['id']) : this.doCallBack(localStorage.getItem('ID'))
     );
+  }
 
-    this.user$.subscribe(
-      (result) => {
-        console.log("get friends of " + result.userId.toString());
-        this.service.getFollowers(result.userId.toString()).subscribe(
-          (res) => {
-            console.log(res)
-            this.followers = res;
-          },
-        );
+  doCallBack(id: string): string {
+    this.service.getUser(id).subscribe(
+      (res) => {
+        this.user = res;
+        this.getFriends(id);
       },
+      (err) => {
+        console.log(err);
+      }
     );
+    return id;
+  }
+
+  getFriends(id: string) {
+    this.service.getFollowers(id).subscribe(
+      (res) => {
+        console.log(res);
+        this.followers = res;
+        if (this.followers && this.followers.message.followers &&  this.followers.message.following) {
+          this.dupplexfollowers = 0;
+          this.followers.message.followers.forEach(ing => {
+            this.followers.message.following.forEach(ers => {
+              if (ing.id === ers.id) {
+                this.dupplexfollowers += 1;
+              }
+            });
+          });
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+
+  goToFriend(id: string) {
+    this.router.navigateByUrl(`/profile/${id}`);
   }
 
   addFriend() {

@@ -47,6 +47,9 @@ export class ProfileService {
       if (res) {
         return res;
       }
+    },
+    (err) => {
+      console.log(err);
     }
   ));
   }
