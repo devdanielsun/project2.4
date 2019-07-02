@@ -37,22 +37,6 @@
   font-weight: 700;
 }
 
-@media only screen and (max-width: 768px) {
-  .bgblock .row{
-    margin-right: 0;
-    margin-left: 0;
-}
-  .markers{
-    margin-bottom: 30px;
-  }
-  h2{
-    font-size:25px;
-  }
-  .markerstext{
-    font-size: 20px;
-  }
-}
-
 .earth {
   font-size: 12pt;
   font-weight: 600;
@@ -117,8 +101,46 @@
   -webkit-box-shadow: -80px 15px 80px 10px rgba(0,0,0,.7) inset;
   z-index: 2;
 }
+@keyframes rotate {
+  0% {background-position: 0 0;}
+  100% {background-position: 1560px 0;}
+}
+
+@media only screen and (max-width: 768px) {
+
+  .bgblock .row{
+    margin-right: 0;
+    margin-left: 0;
+}
+  .markers{
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size:25px;
+  }
+  .markerstext{
+    font-size: 20px;
+  }
+
 
 @keyframes rotate {
   0% {background-position: 0 0;}
   100% {background-position: 1560px 0;}
+}
+
+.earth{
+  width: 300px;
+  height: 300px;
+  /*margin-top: 97%;*/
+  background-size: 630px;
+}
+
+.title{
+  font-size: 10vw;
+}
+
+@keyframes rotate {
+  0% {background-position: 0 0;}
+  100% {background-position: 630px 0;}
+}
 }

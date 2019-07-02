@@ -52,8 +52,8 @@
             </div>            
             <div class="col-xs-12 divider text-center">
                 <div class="col-xs-12 col-sm-6 emphasis active">
-                    <h2 *ngIf="friends$ | async"><strong> {{ followers.message.followers.length + followers.message.following.length }} </strong></h2>    
-                    <h2 *ngIf="!(friends$ | async)"><strong> 0 </strong></h2>
+                    <h2 *ngIf="followers"><strong> {{ followers.message.followers.length + followers.message.following.length }} </strong></h2>
+                    <h2 *ngIf="!(followers)"><strong> 0 </strong></h2>
                     <p><small>Full-duplex followers</small></p>
                     <button class="btn btn-success btn-block" (click)="addFriend()"><span class="fa fa-plus-circle"></span> Add/remove Friend </button>
                 </div>
@@ -76,8 +76,8 @@
                     </ng-template>
                   </div>
                   <div class="col-xs-5 col-md-8">
-                    {{ friend.message.name}} {{ friend.message.lastname }} <br>
-                    <a style="font-size: 10pt" href="mailto:{{ friend.message.email }}">{{ friend.message.email }}</a> 
+                    {{ friend.name}} {{ friend.lastname }} <br>
+                    <a style="font-size: 10pt" href="mailto:{{ friend.email }}">{{ friend.email }}</a>
                   </div>
                 </li>
               </ul>
@@ -95,8 +95,8 @@
                     </ng-template>
                   </div>
                   <div class="col-xs-5 col-md-8">
-                    {{ friend.message.name}} {{ friend.message.lastname }} <br>
-                    <a style="font-size: 10pt" href="mailto:{{ friend.message.email }}">{{ friend.message.email }}</a> 
+                    {{ friend.name}} {{ friend.lastname }} <br>
+                    <a style="font-size: 10pt" href="mailto:{{ friend.email }}">{{ friend.email }}</a>
                   </div>
                 </li>
               </ul>
