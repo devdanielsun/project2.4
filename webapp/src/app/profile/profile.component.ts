@@ -1,11 +1,13 @@
+import { MapService } from './../mapbox/maps/map.service';
 import { ProfileService } from './profile.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { ProfileI, FriendResponce } from './profile';
 import { identifierModuleUrl } from '@angular/compiler';
 import { PopupService } from '../popup/popup.service';
+import { DestinationsResponce } from '../mapbox/maps/map';
 
 @Component({
   selector: 'app-user-profile',
@@ -30,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
   showMSG$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private service: ProfileService, private router: Router, private popupService: PopupService) {
+  constructor(private route: ActivatedRoute, private service: ProfileService, private router: Router, private mapService: MapService, private popupService: PopupService) {
     this.mostVisitedCountry = 'Netherlands';
     this.amountVisitedCountries = -1;
     this.amountTravels = -1;
@@ -54,6 +56,7 @@ export class ProfileComponent implements OnInit {
       (res) => {
         this.user = res;
         this.getFriends(id);
+        this.getVisitedCountryNames(id);
       },
       (err) => {
         console.log(err);
@@ -61,6 +64,27 @@ export class ProfileComponent implements OnInit {
     );
     return id;
   }
+
+  getVisitedCountryNames(id: string) {
+    let maps: DestinationsResponce;
+    this.mapService.getMap(id).subscribe(
+      (res) => {
+        console.log(res.message);
+        maps = res;
+        let count: number;
+        count = 0;
+        for (let x = 0; x <= (maps.message.length); x++) {
+          count += 1;
+        }
+        console.log(count);
+        this.amountVisitedCountries = count;
+      },
+          (err: any) => {
+          console.log(err);
+      },
+    );
+  }
+
 
   getFriends(id: string) {
     this.service.getFollowers(id).subscribe(
