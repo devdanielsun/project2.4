@@ -42,18 +42,14 @@ export class ProfileService {
   }
 
   getFollowers(id: string) {
-  return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends}`).pipe(tap(
+  return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends`).pipe(tap(
     (res: FriendResponce) => {
       if (res) {
-        console.log(res);
+        return res;
       }
-    },
-    (err) => {
-      console.log(err);
     }
   ));
   }
-  
 
   addFriend(id: string, fid: string): Observable<ProfileI> {
     const friendProfile = this.getUser(fid);

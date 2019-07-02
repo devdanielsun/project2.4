@@ -41,8 +41,10 @@ export class ProfileComponent implements OnInit {
 
     this.user$.subscribe(
       (result) => {
+        console.log("get friends of " + result.userId.toString());
         this.service.getFollowers(result.userId.toString()).subscribe(
           (res) => {
+            console.log(res)
             this.followers = res;
           },
         );
