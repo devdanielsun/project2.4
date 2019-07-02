@@ -68,7 +68,7 @@
                     <button class="btn btn-success btn-block" (click)="addFriend(user.message.id)"><span class="fa fa-plus-circle"></span> Add friend </button>
                   </div>
                   <div *ngIf="alreadyFollowing">
-                    <button class="btn btn-success btn-block" (click)="removeFriend(user.message.id)"><span class="fa fa-plus-circle"></span> Remove friend </button>
+                    <button class="btn btn-success btn-block disabled" (click)="removeFriend(user.message.id)"><span class="fa fa-check"></span> Already following </button>
                   </div>
                 </div>
                 <div class="col-xs-6">
