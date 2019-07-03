@@ -12,23 +12,15 @@
             <!-- The JDBC driver of your database -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
-            <!-- PostgreSQL JDBC driver example -->
-            <!--
-            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            -->
-
             <!-- The JDBC URL to the database instance -->
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/holidayz" />
-
-            <!-- PostgreSQL JDBC connection url example -->
-            <!--
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.172.60.91:5432/jpatest" />
-            -->
 
             <!-- The database username -->
             <!-- VERVANG DEZE WAARDEN MET DE GELDENDE WAARDEN OP JE EIGEN SYSTEEM -->
             <property name="javax.persistence.jdbc.user" value="memory_api" />
+
             <!-- memory_api  pwd: Zo3t3Aardapp3l-->
+
             <!-- The database password -->
             <!-- VERVANG DEZE WAARDEN MET DE GELDENDE WAARDEN OP JE EIGEN SYSTEEM -->
             <property name="javax.persistence.jdbc.password" value="Zo3t3Aardapp3l" />

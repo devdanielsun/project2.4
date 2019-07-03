@@ -38,11 +38,6 @@ public class User {
     @JsonManagedReference(value = "map_location")
     private List<Location> locations;
 
-//    @OneToMany(mappedBy = "id", orphanRemoval = true, fetch = FetchType.EAGER)
-//    @JsonIgnoreProperties("id")
-//    @JsonManagedReference(value = "vrienden")
-//    private List<Friend> friends;
-
     public User(){
 
     }
@@ -55,18 +50,6 @@ public class User {
         this.isAdmin = false;
     }
 
-//    @JsonIgnore
-////    public List<Friend> getFriends() {
-////        return friends;
-////    }
-////
-////    public void setFriends(List<Friend> friends) {
-////        this.friends = friends;
-////    }
-////
-////    public void addFriend(Friend newFriend){
-////        friends.add(newFriend);
-////    }
 
     public int getId(){
         return this.id;

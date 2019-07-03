@@ -25,23 +25,9 @@ public class config {
         headers.add("Content-Type");
         headers.add("Authorization");
 
-        //rh.set("Access-Control-Allow-Origin", "*");
         rh.setAccessControlAllowOrigin("*");
-
-        //rh.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-        //rh.setAccessControlRequestMethod(HttpMethod.GET);
-        //rh.setAccessControlRequestMethod(HttpMethod.POST);
         rh.add("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-        //rh.add("Access-Control-Allow-Origin", "*");
-        //rh.setAccessControlRequestMethod(HttpMethod.OPTIONS);
-        //rh.setAccessControlRequestMethod(HttpMethod.PUT);
-        //rh.setAccessControlRequestMethod(HttpMethod.PATCH);
-        //rh.setAccessControlRequestMethod(HttpMethod.DELETE);
-
-        //rh.set("Access-Control-Allow-Credentials", "true");
         rh.setAccessControlAllowCredentials(true);
-
-        //rh.set("Access-Control-Allow-Headers", "*");
         rh.setAccessControlAllowHeaders(headers);
     }
 

@@ -14,15 +14,6 @@ public class Friend {
     @Column(name = "id")
     private int id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User u1;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "friend_id", nullable = false)
-//    @JsonBackReference(value = "vrienden")
-//    private User u2;
-
     @Column(name = "user_id")
     private int u1;
 

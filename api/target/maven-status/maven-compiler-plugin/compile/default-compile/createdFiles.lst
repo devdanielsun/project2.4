@@ -1,17 +1,11 @@
 api/controllers/LocationController.class
-api/model/LoginModel.class
 api/controllers/newUserToken.class
 api/model/LocationModel.class
-api/keys/RSA.class
-api/controllers/CountryController.class
 api/model/UserModel.class
 api/Application.class
-api/controllers/Message.class
 api/tables/User.class
-api/tables/Country.class
 api/controllers/TokenController.class
 api/tables/Friend.class
-api/controllers/LoginController.class
 api/controllers/UserController.class
 api/config.class
 api/controllers/TokenResponse.class
