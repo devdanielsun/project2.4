@@ -1,5 +1,4 @@
-import { UserI } from './../../jwt/user';
-import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
+
 export interface MapI {
   user: {
     id: number;
@@ -53,9 +52,4 @@ export class GeoJson implements IGeoJson {
       coordinates: coordinates
     }
   }
-}
-
-export class FeatureCollection {
-  type = 'FeatureCollection'
-  constructor(public features: Array<GeoJson>) {}
 }

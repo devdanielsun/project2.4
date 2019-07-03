@@ -1,13 +1,10 @@
-
 import { ProfileService } from './../../../profile/profile.service';
 import { AuthService } from './../../../auth/auth.service';
 import { MapService } from './../map.service';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { GeoJson, FeatureCollection, MapI, DestinationsResponce } from '../map';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { MapI, DestinationsResponce } from '../map';
+import { ActivatedRoute, } from '@angular/router';
 import { ProfileI } from 'src/app/profile/profile';
 
 

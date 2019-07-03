@@ -2,10 +2,8 @@ import { MapService } from './../mapbox/maps/map.service';
 import { ProfileService } from './profile.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileI, FriendResponce } from './profile';
-import { identifierModuleUrl } from '@angular/compiler';
 import { PopupService } from '../popup/popup.service';
 import { DestinationsResponce } from '../mapbox/maps/map';
 

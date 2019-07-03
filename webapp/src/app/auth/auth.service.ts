@@ -1,26 +1,22 @@
-import { ProfileService } from './../profile/profile.service';
+import { ConfigService } from './../config.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegUserI } from '../jwt/reg-user';
 import { UserI } from '../jwt/user';
 import { JwtResponseI } from '../jwt/jwt-response';
-import { tap, reduce } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable()
 export class AuthService {
-  BackendCasper = '145.37.156.115:8080';
-  AUTH_SERVER = 'http://csprl.nl:8088'; // http://localhost:5000/api';
-  //'http:csprl.nl:8088';
-  BACKEND_SERVER = '145.37.156.225:8080';
   authSubject = new BehaviorSubject(false);
   private token: string;
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private config: ConfigService) {
     this.isAuthenticated();
   }
 
@@ -29,7 +25,8 @@ export class AuthService {
   }
 
   login(user: UserI): Observable<JwtResponseI> {
-    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/login`, JSON.stringify(user)).pipe(tap(
+    const url = this.config.getBackendUrl() + '/login';
+    return this.httpClient.post<JwtResponseI>(url, JSON.stringify(user)).pipe(tap(
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);
@@ -53,7 +50,7 @@ export class AuthService {
 
   register(regUser: RegUserI): Observable<JwtResponseI> {
     console.log(JSON.stringify(regUser));
-    return this.httpClient.post<JwtResponseI>(`${this.AUTH_SERVER}/registration`, JSON.stringify(regUser)).pipe(tap(
+    return this.httpClient.post<JwtResponseI>(this.config.getBackendUrl() + '/registration', JSON.stringify(regUser)).pipe(tap(
       (res: JwtResponseI) => {
         if (res) {
           console.log(res);

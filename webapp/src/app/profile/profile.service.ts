@@ -1,8 +1,8 @@
-import { AuthService } from './../auth/auth.service';
+import { ConfigService } from './../config.service';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { ProfileI, FriendResponce, addfriend } from './profile';
 import { HttpClient } from '@angular/common/http';
@@ -11,12 +11,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ProfileService {
-  BackendCasper = 'http://csprl.nl:8088';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private config: ConfigService) { }
 
   getUser(id: string): Observable<ProfileI> {
-    const me = this.httpClient.get<ProfileI>(`${this.BackendCasper}/user/${id}`).pipe(tap(
+    const url = this.config.getBackendUrl() + '/user/' + id;
+    const me = this.httpClient.get<ProfileI>(url).pipe(tap(
       (res: ProfileI) => {
         if (res && res.userId === res.message.id) {
           this.saveUser(res.message);
@@ -30,7 +30,8 @@ export class ProfileService {
   }
 
   getFollowers(id: string) {
-    return this.httpClient.get<FriendResponce>(`${this.BackendCasper}/user/${id}/friends`).pipe(tap(
+    const url = this.config.getBackendUrl() + '/user/' + id + '/friends';
+    return this.httpClient.get<FriendResponce>(url).pipe(tap(
       (res: FriendResponce) => {
         if (res) {
           return res;
@@ -43,7 +44,8 @@ export class ProfileService {
   }
 
   addFriend(id: string, fid: string): Observable<addfriend> {
-    return this.httpClient.post<addfriend>(`${this.BackendCasper}/user/${id}/friends/${fid}`, '').pipe(tap(
+    const url = this.config.getBackendUrl() + '/user/' + id + '/friends/' + fid;
+    return this.httpClient.post<addfriend>(url, '').pipe(tap(
       (res: addfriend) => {
         console.log(res);
         return res;
@@ -55,7 +57,8 @@ export class ProfileService {
   }
 
   deleteFriend(id: string, fid: string): Observable<any> {
-    return this.httpClient.delete(`${this.BackendCasper}/user/${id}/friends/${fid}`).pipe(tap(
+    const url = this.config.getBackendUrl() + '/user/' + id + '/friends/' + fid;
+    return this.httpClient.delete(url).pipe(tap(
       (res) => {
         console.log(res);
         return res;
