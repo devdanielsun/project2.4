@@ -1,17 +1,16 @@
 # project2.4
 
-### webapp
+### Front-end
 https://angular.io/
 
 To open the webapp use
 
 	cd webapp
 	npm install
-	ng serve --open
+	ng serve -o
 
+### Back-end
+Jawa Maven
 
 ### Android Native
-Android studio?
-
-### IOS Native
-Swift?
+PWA
